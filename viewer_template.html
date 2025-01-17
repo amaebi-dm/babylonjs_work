@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Viewer 1 Example</title>
+    <!-- ビューアライブラリを読み込み -->
+    <script src="https://cdn.babylonjs.com/viewer/babylon.viewer.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+    <script>
+        BabylonViewer.viewerManager.getViewerPromiseById('myViewer').then((viewer) => {    
+            viewer.onSceneInitObservable.add(() => {
+                viewer.sceneManager.camera.radius = 15; //set camera radius
+                viewer.sceneManager.camera.beta = Math.PI / 2.2; //angle of depression 
+            });
+            viewer.onEngineInitObservable.add((scene) => {
+                viewer.loadModel({
+                    url: "https://assets.babylonjs.com/meshes/village.glb"
+                });
+            });
+        });
+    </script>
+    <!-- stylesheet は省略 -->
+</head>
+<body>
+    <div id = "header">
+        Viewer News
+    </div>
+    <div class= "cell babylon">
+        <babylon id = "myViewer" extends = "minimal"></babylon>
+    </div>
+    <div class = "cell">
+        Lorem ipsum dolor sit amet,サンプルテキスト
+    </div>
+    <div class= "cell">
+        Lorem ipsum dolor sit amet,サンプルテキスト
+    </div>
+    <div class= "cell">
+        Lorem ipsum dolor sit amet,サンプルテキスト
+    </div>
+    <div class= "cell">
+        Lorem ipsum dolor sit amet,サンプルテキスト
+    </div>
+    <div class= "cell">
+        Lorem ipsum dolor sit amet,サンプルテキスト
+    </div>
+</body>
+    </html>
