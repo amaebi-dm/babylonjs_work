@@ -53,7 +53,7 @@ const main = async () => {
   engine.runRenderLoop(() => scene.render());
 
   // ここで読み込んでる
-  const model = await loadAssetContainerAsync( spzUrl ,scene);
+  await loadAssetContainerAsync( spzUrl ,scene);
   
 };
 
