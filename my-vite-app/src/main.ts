@@ -24,6 +24,7 @@
 // setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
 
 
+// import "./style.css";
 import "./style.css";
 
 import { Engine, loadAssetContainerAsync, Scene } from "@babylonjs/core";
