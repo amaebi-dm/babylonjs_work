@@ -35,7 +35,7 @@ import "@babylonjs/loaders/SPLAT";
 // SPZファイルのパス(公式サンプルデータのracoonfamily)
 // import spzUrl from "/assets/racoonfamily.spz?url";
 // import spzUrl from "/assets/test.spz?url";
-import spzUrl from "/assets/pod.spz?url";
+// import spzUrl from "/assets/pod.spz?url";
 // import spzUrl from "/assets/test600.spz?url";
 
 
@@ -55,8 +55,8 @@ const main = async () => {
   engine.runRenderLoop(() => scene.render());
 
   // ここで読み込んでる
-  // await loadAssetContainerAsync( "https://vxv.co.jp/bizb/wp-content/uploads/temporary/pod.spz" ,scene);
-  await loadAssetContainerAsync( spzUrl,scene);
+  await loadAssetContainerAsync( "https://vxv.co.jp/bizb/wp-content/uploads/temporary/pod.spz" ,scene);
+  // await loadAssetContainerAsync( spzUrl,scene);
   
 };
 
