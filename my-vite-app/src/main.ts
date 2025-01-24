@@ -27,8 +27,8 @@ const main = async () => {
   // とりあえず黒背景.
   scene.clearColor = new Color4( 0, 0, 0, 1 );
   // 背景画像設定.
-  // new Layer('bg', "/assets/bg.jpeg", scene, true ); //https://i.imgur.com/mBBxGJH.jpg
-  new Layer('bg', "/assets/sky.jpg", scene, true ); 
+  // new Layer('bg', "https://i.imgur.com/mBBxGJH.jpg", scene, true ); //https://i.imgur.com/mBBxGJH.jpg
+  new Layer('bg', "assets/sky.jpg", scene, true ); 
 
   scene.createDefaultCameraOrLight(true, true, true);
 
