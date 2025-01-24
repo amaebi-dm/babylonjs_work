@@ -1,33 +1,7 @@
-// import './style.css'
-// import typescriptLogo from './typescript.svg'
-// import viteLogo from '/vite.svg'
-// import { setupCounter } from './counter.ts'
-
-// document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-//   <div>
-//     <a href="https://vite.dev" target="_blank">
-//       <img src="${viteLogo}" class="logo" alt="Vite logo" />
-//     </a>
-//     <a href="https://www.typescriptlang.org/" target="_blank">
-//       <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-//     </a>
-//     <h1>Vite + TypeScript</h1>
-//     <div class="card">
-//       <button id="counter" type="button"></button>
-//     </div>
-//     <p class="read-the-docs">
-//       Click on the Vite and TypeScript logos to learn more
-//     </p>
-//   </div>
-// `
-
-// setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
-
-
 // import "./style.css";
 import "./style.css";
 
-import { Engine, loadAssetContainerAsync, Scene } from "@babylonjs/core";
+import { Engine, loadAssetContainerAsync, Scene, Color4, Layer } from "@babylonjs/core";
 
 // GaussianSplattingのローダを有効化
 import "@babylonjs/loaders/SPLAT";
@@ -37,6 +11,8 @@ import "@babylonjs/loaders/SPLAT";
 // import spzUrl from "/assets/test.spz?url";
 // import spzUrl from "/assets/pod.spz?url";
 // import spzUrl from "/assets/test600.spz?url";
+
+// import bgUrl from "/assets/bg.jpeg?url";
 
 
 const main = async () => {
@@ -48,6 +24,11 @@ const main = async () => {
 
   const engine = new Engine(renderCanvas);
   const scene = new Scene(engine);
+  // とりあえず黒背景.
+  scene.clearColor = new Color4( 0, 0, 0, 1 );
+  // 背景画像設定.
+  // new Layer('bg', "/assets/bg.jpeg", scene, true ); //https://i.imgur.com/mBBxGJH.jpg
+  new Layer('bg', "/assets/sky.jpg", scene, true ); 
 
   scene.createDefaultCameraOrLight(true, true, true);
 
