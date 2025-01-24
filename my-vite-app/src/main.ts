@@ -28,7 +28,8 @@ const main = async () => {
   scene.clearColor = new Color4( 0, 0, 0, 1 );
   // 背景画像設定.
   // new Layer('bg', "https://i.imgur.com/mBBxGJH.jpg", scene, true ); //https://i.imgur.com/mBBxGJH.jpg
-  new Layer('bg', "assets/sky.jpg", scene, true ); 
+  // new Layer('bg', "assets/sky.jpg", scene, true ); // https://github.com/amaebi-dm/babylonjs_work/blob/main/docs/assets/sky.jpg
+  new Layer('bg', "https://raw.githubusercontent.com/amaebi-dm/babylonjs_work/refs/heads/main/resources/sky.jpg", scene, true );
 
   scene.createDefaultCameraOrLight(true, true, true);
 
