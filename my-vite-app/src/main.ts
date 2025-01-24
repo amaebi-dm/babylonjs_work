@@ -43,8 +43,8 @@ const main = async () => {
   var advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
 
   var button = GUI.Button.CreateSimpleButton("but1", "Buttton");
-  button.left = "-300px"
-  button.top = "-300px";
+  // button.left = "-300px"
+  // button.top = "-300px";
   button.paddingTop = "1px";
   button.width = "100px";
   button.height = "50px";
