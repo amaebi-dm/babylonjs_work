@@ -2,6 +2,8 @@
 import "./style.css";
 
 import { Engine, loadAssetContainerAsync, Scene, Color4, Layer } from "@babylonjs/core";
+import * as GUI from "@babylonjs/gui";
+// import { AdvancedDynamicTexture, Button } from '@babylonjs/gui/2D';
 
 // GaussianSplattingのローダを有効化
 import "@babylonjs/loaders/SPLAT";
@@ -35,6 +37,25 @@ const main = async () => {
 
   window.addEventListener("resize", () => engine.resize());
   engine.runRenderLoop(() => scene.render());
+
+
+  // UI
+  var advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+
+  var button = GUI.Button.CreateSimpleButton("but1", "Buttton");
+  button.left = "-300px"
+  button.top = "-300px";
+  button.paddingTop = "1px";
+  button.width = "100px";
+  button.height = "50px";
+  button.color = "white";
+  button.background = "green";
+  button.onPointerDownObservable.add(() => 
+  {
+    console.log( "click" );
+  });
+  advancedTexture.addControl(button);
+
 
   // ここで読み込んでる
   await loadAssetContainerAsync( "https://vxv.co.jp/bizb/wp-content/uploads/temporary/pod.spz" ,scene);
