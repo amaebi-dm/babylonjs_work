@@ -2,7 +2,7 @@
 import "./style.css";
 
 // import { Engine, loadAssetContainerAsync, Scene, Color3, Color4, Vector3, Layer, FlyCamera, HemisphericLight, MeshBuilder, StandardMaterial, Animation, BezierCurveEase } from "@babylonjs/core";
-import { Engine, loadAssetContainerAsync, Scene, Color4, Vector3, Layer, FlyCamera, HemisphericLight } from "@babylonjs/core";
+import { Engine, loadAssetContainerAsync, Scene, Color4, Layer } from "@babylonjs/core";
 
 import * as GUI from "@babylonjs/gui";
 // import { AdvancedDynamicTexture, Button } from '@babylonjs/gui/2D';
@@ -46,12 +46,12 @@ const main = async () => {
 
 
 
-  // scene.createDefaultCameraOrLight(true, true, true);
+  scene.createDefaultCameraOrLight(true, true, true);
   // scene.createDefaultCameraOrLight(false, true, false);
 
-  const camera = new FlyCamera( "camera1", new Vector3(0,1,-3), scene );
-  camera.attachControl( false );  
-  new HemisphericLight('light', new Vector3(0,0,0),scene);
+  // const camera = new FlyCamera( "camera1", new Vector3(0,1,-3), scene );
+  // camera.attachControl( false );  
+  // new HemisphericLight('light', new Vector3(0,0,0),scene);
 
 
 
