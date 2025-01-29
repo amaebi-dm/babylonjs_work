@@ -226,7 +226,7 @@ const main = async () => {
   // await loadAssetContainerAsync( spzUrl,scene);
 
   
-  // SceneLoader.ImportMeshAsync(null, "", "https://vxv.co.jp/bizb/wp-content/uploads/temporary/pod.ply", scene)
+  // SceneLoader.ImportMeshAsync(null, "", "https://vxv.co.jp/bizb/wp-content/uploads/temporary/chair.ply", scene)
   SceneLoader.ImportMeshAsync(null, "", "/assets/chair.ply", scene)
   .then((result) => 
   {
