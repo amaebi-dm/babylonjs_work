@@ -154,7 +154,8 @@ const main = async () => {
   // ScreenUI
   var advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
 
-  var img = new GUI.Image( "window", "/assets/window.png" );
+  // var img = new GUI.Image( "window", "/assets/window.png" );
+  var img = new GUI.Image( "window", "https://raw.githubusercontent.com/amaebi-dm/babylonjs_work/refs/heads/main/resources/window.jpg" );
   img.width = 0.5;
   img.height = 0.5;
   var isOpen = 0;
@@ -227,7 +228,8 @@ const main = async () => {
 
   
   // SceneLoader.ImportMeshAsync(null, "", "https://vxv.co.jp/bizb/wp-content/uploads/temporary/chair.ply", scene)
-  SceneLoader.ImportMeshAsync(null, "", "/assets/chair.ply", scene)
+  SceneLoader.ImportMeshAsync(null, "", "https://raw.githubusercontent.com/amaebi-dm/babylonjs_work/refs/heads/main/resources/chair.ply", scene)
+  // SceneLoader.ImportMeshAsync(null, "", "/assets/chair.ply", scene)
   .then((result) => 
   {
       const mesh = result.meshes[0];
