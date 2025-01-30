@@ -10,15 +10,19 @@ import
   Color3, 
   Color4, 
   Vector3, 
-  Layer, 
-  FlyCamera, 
+  Layer,
+  // FlyCamera, 
+  ArcRotateCamera,
   HemisphericLight, 
   MeshBuilder, 
   StandardMaterial, 
-  // Animation, 
+  Animation, 
   SceneLoader, 
   UtilityLayerRenderer,
-  PositionGizmo
+  PositionGizmo,
+  // BackEase,
+  // Vector
+  SineEase
 } 
 from "@babylonjs/core";
 // import { Engine, loadAssetContainerAsync, Scene, Color4, Layer } from "@babylonjs/core";
@@ -41,7 +45,8 @@ import "@babylonjs/loaders/SPLAT";
 // import bgUrl from "/assets/bg.jpeg?url";
 
 
-const main = async () => {
+const main = async () => 
+{
   const renderCanvas =
     document.querySelector<HTMLCanvasElement>("#renderCanvas");
   if (!renderCanvas) {
@@ -62,8 +67,9 @@ const main = async () => {
   // Camera,Light 
   // scene.createDefaultCameraOrLight(true, true, true);
   // scene.createDefaultCameraOrLight(false, true, false);
-  const camera = new FlyCamera( "camera1", new Vector3( 0, 1, -5 ), scene );
-  camera.attachControl( false );  
+  const camera = new ArcRotateCamera( "camera1", 0, 0, 5, new Vector3( 0, 1, 0 ), scene );
+  camera.position = new Vector3( 0, 1, -5 );
+  camera.attachControl( false ); 
   new HemisphericLight('light', new Vector3(0,0,0),scene);
 
 
@@ -105,10 +111,12 @@ const main = async () => {
   boxButton.color = "white";
   boxButton.fontSize = 100;
   boxButton.background = "green";
-  boxButton.onPointerUpObservable.add(function() 
+  boxButton.onPointerUpObservable.add( async function() 
   {
       console.log( "box clicked!!" );
-      camera.position = new Vector3( 1, 1, -2 );
+      // camera.position = new Vector3( 1, 1, -2 );      
+      // camera.target = new Vector3( 1, 0.5, 0 );
+      await cameraAnimation( "Right", camera, scene );
   });
   advancedTextureBox.addControl( boxButton );
 
@@ -134,10 +142,12 @@ const main = async () => {
   sphereButton.color = "white";
   sphereButton.fontSize = 100;
   sphereButton.background = "green";
-  sphereButton.onPointerUpObservable.add(function() 
+  sphereButton.onPointerUpObservable.add( async function() 
   {
       console.log( "sphere clicked!!" );
-      camera.position = new Vector3( -1, 1, -2 );
+      // camera.position = new Vector3( -1, 1, -2 );
+      // camera.target = new Vector3( -1, 0.5, 0 );
+      await cameraAnimation( "Left", camera, scene );
   });
   advancedTextureSphere.addControl( sphereButton );
 
@@ -169,14 +179,16 @@ const main = async () => {
   button.height = "50px";
   button.color = "white";
   button.background = "green";
-  button.onPointerDownObservable.add(() => 
+  button.onPointerDownObservable.add( async() => 
   {
     console.log( "click" );
 
     // var currentX = camera.position.x;
     // currentX --;
     // camera.position.x = currentX;
-    camera.position = new Vector3( 0, 1, -5 );
+    // camera.position = new Vector3( 0, 1, -5 );
+    // camera.target = new Vector3( 0, 1, 0 );
+    await cameraAnimation( "Center", camera, scene );
   
     if( isOpen == 0 ) 
     {
@@ -247,3 +259,103 @@ const main = async () => {
 };
 
 main();
+
+
+type PostiionType = "Center" | "Right" | "Left";
+var currentPosition : PostiionType = "Center";
+var isAnimation = false;
+
+async function cameraAnimation( goalPosition: PostiionType, targetCamera: ArcRotateCamera, scene: Scene ) 
+{
+  if( currentPosition == goalPosition )
+  {
+    console.log( "同じ場所なのでアニメーションを中断します." );
+    return;
+  }
+
+  if( isAnimation == true )
+  {
+    console.log( "現在アニメーション中です." );
+    return;
+  }
+  isAnimation = true;
+
+  // var start = getPostiionValue( currentPosition );
+  var goal = getPostiionValue( goalPosition );
+  // console.log( goal );
+
+  // targetCamera.position = start;
+  // position.
+  var animation1 = new Animation( "animation", "position", 30, Animation.ANIMATIONTYPE_VECTOR3 );
+  var keys = [];
+  keys.push(
+    { 
+      frame: 0, 
+      value: targetCamera.position
+    });
+  keys.push(
+    { 
+      frame: 50, 
+      value: goal
+    });
+  animation1.setKeys( keys );
+  var ease = new SineEase();
+  animation1.setEasingFunction( ease );
+  // var ease = new BezierCurveEase(0.32, -0.73, 0.69, 1.59);
+  // animation.setEasingFunction( ease );
+  targetCamera.animations = [];
+  targetCamera.animations.push( animation1 );
+
+  // target
+  // var startT = getCameraTargetValue( currentPosition );
+  var goalT = getCameraTargetValue( goalPosition );
+  var animation2 = new Animation( "animation", "target", 30, Animation.ANIMATIONTYPE_VECTOR3 );
+  var keys = [];
+  keys.push(
+    { 
+      frame: 0, 
+      value: targetCamera.target
+    });
+  keys.push(
+    { 
+      frame: 50, 
+      value: goalT
+    });
+  animation2.setKeys( keys );
+  animation2.setEasingFunction( ease );
+  // targetCamera.animations = [];
+  targetCamera.animations.push( animation2 );
+
+
+
+  var anim = scene.beginAnimation( targetCamera, 0, 50, false, 2 );
+  await anim.waitAsync();
+  // targetCamera.position = goal;
+  anim.stop();
+
+  currentPosition = goalPosition;
+  targetCamera.target = getCameraTargetValue( goalPosition );
+
+  isAnimation = false;
+
+}
+
+function getPostiionValue( key : PostiionType )
+{
+  switch ( key )
+  {
+    case "Center": return new Vector3( 0, 1, -5 );
+    case "Right": return new Vector3( 1, 1, -2 );
+    case "Left": return new Vector3( -1, 1, -2 );
+  }
+}
+
+function getCameraTargetValue( key : PostiionType )
+{
+  switch ( key )
+  {
+    case "Center": return new Vector3( 0, 1, 0 );
+    case "Right": return new Vector3( 1, 0.5, 0 );
+    case "Left": return new Vector3( -1, 0.5, 0 );
+  }
+}
