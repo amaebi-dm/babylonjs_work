@@ -155,7 +155,7 @@ const main = async () => {
   var advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
 
   // var img = new GUI.Image( "window", "/assets/window.png" );
-  var img = new GUI.Image( "window", "https://raw.githubusercontent.com/amaebi-dm/babylonjs_work/refs/heads/main/resources/window.jpg" );
+  var img = new GUI.Image( "window", "https://raw.githubusercontent.com/amaebi-dm/babylonjs_work/refs/heads/main/resources/window.png" );
   img.width = 0.5;
   img.height = 0.5;
   var isOpen = 0;
