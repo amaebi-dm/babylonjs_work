@@ -1,4 +1,4 @@
-// import "./style.css";
+
 import "./style.css";
 
 import 
@@ -20,12 +20,9 @@ import
   SceneLoader, 
   UtilityLayerRenderer,
   PositionGizmo,
-  // BackEase,
-  // Vector
   SineEase
 } 
 from "@babylonjs/core";
-// import { Engine, loadAssetContainerAsync, Scene, Color4, Layer } from "@babylonjs/core";
 
 import '@babylonjs/loaders/glTF';
 
@@ -41,8 +38,14 @@ import "@babylonjs/loaders/SPLAT";
 // import spzUrl from "/assets/pod.spz?url";
 // import spzUrl from "/assets/test600.spz?url";
 // import spzUrl from "/assets/light.spz?url";
-
 // import bgUrl from "/assets/bg.jpeg?url";
+
+
+
+var advancedTextureForWindow: GUI.AdvancedDynamicTexture;
+var windowImg: GUI.Image;
+
+type PostiionType = "Box" | "Chair" | "Pod" | "Sphere" | "All" ;
 
 
 const main = async () => 
@@ -85,12 +88,32 @@ const main = async () =>
   gizmo.attachedMesh = center;
 
 
-
+  // ground
   MeshBuilder.CreateGround( "ground", { width: 10, height: 10 } );
+
+  // メッシュヒット.
+  scene.onPointerDown = function( evt, pickInfo )
+  {
+    let pickedMesh : string | undefined = "";
+    if( pickInfo.hit )
+    {
+      pickedMesh = pickInfo.pickedMesh?.name;
+    }
+
+    if( pickedMesh != null ) 
+    {      
+      // とりあえずヒットしたオブジェクトの名前で必要なモノを判断.
+      if( pickedMesh.includes( "_MESH" ) )
+      {
+        console.log( "mesh にヒット ( " + pickedMesh + " )" + evt );
+        onMeshHit( pickedMesh, camera, scene );
+      }
+    }
+  }
 
 
   // box
-  var box = MeshBuilder.CreateBox( "box", { width: 0.3, height: 0.3, depth: 0.3 }, scene );
+  var box = MeshBuilder.CreateBox( "Box_MESH", { width: 0.3, height: 0.3, depth: 0.3 }, scene );
   box.position.x = 1;
   box.position.y = 0.5;
   var boxmat = new StandardMaterial( "boxmat", scene );
@@ -105,23 +128,31 @@ const main = async () =>
 
   var advancedTextureBox = GUI.AdvancedDynamicTexture.CreateForMesh( boxUiPlane );
 
-  var boxButton = GUI.Button.CreateSimpleButton("but1", "Click Me");
-  boxButton.width = 0.5;
-  boxButton.height = 0.5;
+  var boxTxt = new GUI.TextBlock();
+  boxTxt.text = "BOX";
+  boxTxt.color = "white";
+  boxTxt.fontSize = 220;
+  boxTxt.isPointerBlocker = false;
+  var boxButton = GUI.Button.CreateSimpleButton( "boxBtn", "🔎" );
+  boxButton.width = 0.2;
+  boxButton.height = 0.2;
   boxButton.color = "white";
   boxButton.fontSize = 100;
-  boxButton.background = "green";
+  boxButton.background = "blue";
+  boxButton.left = 400;
+  boxButton.top = -100;
+  boxButton.zIndex = 1;
   boxButton.onPointerUpObservable.add( async function() 
   {
       console.log( "box clicked!!" );
-      // camera.position = new Vector3( 1, 1, -2 );      
-      // camera.target = new Vector3( 1, 0.5, 0 );
-      await cameraAnimation( "Right", camera, scene );
+      if ( isOpen == 0 ) oepnScreenWindow();
+      else closeScreenWindow();
   });
   advancedTextureBox.addControl( boxButton );
+  advancedTextureBox.addControl( boxTxt );
 
   // sphere
-  var sphere = MeshBuilder.CreateSphere( "sphere", { segments: 0.3, diameter: 0.3 }, scene );
+  var sphere = MeshBuilder.CreateSphere( "Sphere_MESH", { segments: 0.3, diameter: 0.3 }, scene );
   sphere.position.x = -1;
   sphere.position.y = 0.5;
   var spheremat = new StandardMaterial( "spheremat", scene );
@@ -136,20 +167,27 @@ const main = async () =>
 
   var advancedTextureSphere = GUI.AdvancedDynamicTexture.CreateForMesh( sphereUiPlane );
 
-  var sphereButton = GUI.Button.CreateSimpleButton("but1", "Click Me");
-  sphereButton.width = 0.5;
-  sphereButton.height = 0.5;
-  sphereButton.color = "white";
-  sphereButton.fontSize = 100;
-  sphereButton.background = "green";
-  sphereButton.onPointerUpObservable.add( async function() 
+  var spTxt = new GUI.TextBlock();
+  spTxt.text = "SPHERE";
+  spTxt.color = "white";
+  spTxt.fontSize = 220;
+  var spButton = GUI.Button.CreateSimpleButton( "spBtn", "🔎" );
+  spButton.width = 0.2;
+  spButton.height = 0.2;
+  spButton.color = "white";
+  spButton.fontSize = 100;
+  spButton.background = "blue";
+  spButton.left = 400;
+  spButton.top = -100;
+  spButton.zIndex = 1;
+  spButton.onPointerUpObservable.add( async function() 
   {
       console.log( "sphere clicked!!" );
-      // camera.position = new Vector3( -1, 1, -2 );
-      // camera.target = new Vector3( -1, 0.5, 0 );
-      await cameraAnimation( "Left", camera, scene );
+      if ( isOpen == 0 ) oepnScreenWindow();
+      else closeScreenWindow();
   });
-  advancedTextureSphere.addControl( sphereButton );
+  advancedTextureSphere.addControl( spButton );
+  advancedTextureSphere.addControl( spTxt );
 
 
 
@@ -161,15 +199,12 @@ const main = async () =>
   engine.runRenderLoop(() => scene.render());
 
 
-  // ScreenUI
-  var advancedTexture = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
 
-  // var img = new GUI.Image( "window", "/assets/window.png" );
-  var img = new GUI.Image( "window", "https://raw.githubusercontent.com/amaebi-dm/babylonjs_work/refs/heads/main/resources/window.png" );
-  img.width = 0.5;
-  img.height = 0.5;
-  var isOpen = 0;
-  
+
+
+  // ScreenUI/Button
+  advancedTextureForWindow = GUI.AdvancedDynamicTexture.CreateFullscreenUI("WindowCanvas");
+  var advancedTextureButton = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
 
   var button = GUI.Button.CreateSimpleButton("but1", "Buttton");
   // button.left = "-300px"
@@ -188,70 +223,77 @@ const main = async () =>
     // camera.position.x = currentX;
     // camera.position = new Vector3( 0, 1, -5 );
     // camera.target = new Vector3( 0, 1, 0 );
-    await cameraAnimation( "Center", camera, scene );
+    await cameraAnimation( "All", camera, scene );
   
-    if( isOpen == 0 ) 
-    {
-      advancedTexture.addControl( img );
-      isOpen = 1;
-    }
-    else
-    {
-      advancedTexture.removeControl( img );
-      isOpen = 0;
-    }
+    
   });
 
-  advancedTexture.addControl(button);
+  advancedTextureButton.addControl(button);
+
+  // ScreenUI/Image
+  // var img = new GUI.Image( "window", "/assets/window.png" );
+  windowImg = new GUI.Image( "window", "https://raw.githubusercontent.com/amaebi-dm/babylonjs_work/refs/heads/main/resources/window.png" );
+  windowImg.width = 0.5;
+  windowImg.height = 0.5;
+  
+  
 
 
 
-
-  // Torus
-  // var bezierTorus = MeshBuilder.CreateTorus( "torus", { diameter: 1 }, scene );
-  // bezierTorus.position.x = 0;
-  // bezierTorus.position.z = 0;
-  // var mat = new StandardMaterial( "mat", scene );
-  // mat.diffuseColor = new Color3(1, 0, 0);
-  // bezierTorus.material = mat;
-  // // Create the animation
-  // var animationBezierTorus = new Animation("animationBezierTorus", "position", 30, Animation.ANIMATIONTYPE_VECTOR3, Animation.ANIMATIONLOOPMODE_CYCLE);
-  // var keysBezierTorus = [];
-  // keysBezierTorus.push({ frame: 0, value: bezierTorus.position });
-  // keysBezierTorus.push({ frame: 60, value: bezierTorus.position.add(new Vector3(-10, 0, 0)) });
-  // animationBezierTorus.setKeys(keysBezierTorus);
-  // // var bezierEase = new BezierCurveEase(0.32, -0.73, 0.69, 1.59);
-  // // animationBezierTorus.setEasingFunction(bezierEase);
-  // bezierTorus.animations.push(animationBezierTorus);
-  // scene.beginAnimation(bezierTorus, 0, 120, true);
-
-
+  // Pod/SPZ.
   // ここで読み込んでる
   var pod = await loadAssetContainerAsync( "https://vxv.co.jp/bizb/wp-content/uploads/temporary/pod.spz" ,scene);
   var podM = pod.meshes[0];
-  podM.position.x = 1;
-  podM.position.y = 2;
+  podM.name = "Pod_SPZ_MESH";
+  podM.position.x = 0;
+  podM.position.y = 1.5;
+
+  var podUiPlane =  MeshBuilder.CreatePlane("podUiPlane", { width: 0.5, height: 0.5 });
+  podUiPlane.parent = podM;
+  podUiPlane.position.y = 0.2;
+  podUiPlane.billboardMode = Mesh.BILLBOARDMODE_ALL;
+
+  var podAdvancedTexture = GUI.AdvancedDynamicTexture.CreateForMesh( podUiPlane );
+
+  var podTxt = new GUI.TextBlock();
+  podTxt.text = "POD";
+  podTxt.color = "white";
+  podTxt.fontSize = 220;
+  podAdvancedTexture.addControl( podTxt );
 
 
-  // https://vxvcojp.xsrv.jp/sandbox/p/p0168_3dgs/light.spz
-  // await loadAssetContainerAsync( "https://vxvcojp.xsrv.jp/sandbox/p/p0168_3dgs/light.spz" ,scene);
 
-  // await loadAssetContainerAsync( spzUrl,scene);
-
-  
+  // Chair/Ply
   // SceneLoader.ImportMeshAsync(null, "", "https://vxv.co.jp/bizb/wp-content/uploads/temporary/chair.ply", scene)
   SceneLoader.ImportMeshAsync(null, "", "https://raw.githubusercontent.com/amaebi-dm/babylonjs_work/refs/heads/main/resources/chair.ply", scene)
   // SceneLoader.ImportMeshAsync(null, "", "/assets/chair.ply", scene)
   .then((result) => 
   {
-      const mesh = result.meshes[0];
-      mesh.position.y = 2;
+      var mesh = result.meshes[0];
+      mesh.position.y = 1;
+      mesh.name = "Chair_PLY_MESH";
+
       // mesh.material.pointSize = 1.5;
       // 向きと位置を修正
-      // const center = Mesh.Center( result.meshes );
+      // const center = Mesh.Center( result .meshes );
       // mesh.rotateAround(center, new Vector3(1, 0, 0), -Math.PI / 2);
       // mesh.position.subtractInPlace(center);
       // window.alert( "Mesh Load Comp..." );
+
+      
+      var chairUiPlane =  MeshBuilder.CreatePlane("chairUiPlane", { width: 0.5, height: 0.5 });
+      chairUiPlane.parent = mesh;
+      chairUiPlane.position.y = 0.1;
+      chairUiPlane.billboardMode = Mesh.BILLBOARDMODE_ALL;
+
+      var chairAdvancedTexture = GUI.AdvancedDynamicTexture.CreateForMesh( chairUiPlane );
+
+      var chairTxt = new GUI.TextBlock();
+      chairTxt.text = "CHAIR";
+      chairTxt.color = "white";
+      chairTxt.fontSize = 220;
+      chairAdvancedTexture.addControl( chairTxt );
+
   });
 
   
@@ -261,23 +303,76 @@ const main = async () =>
 main();
 
 
-type PostiionType = "Center" | "Right" | "Left";
-var currentPosition : PostiionType = "Center";
+
+
+// function.
+async function onMeshHit( hitMeshName : string, cam : ArcRotateCamera, scn : Scene )
+{
+  if( hitMeshName.includes( "Box" ) ) await onBoxHit( cam, scn );
+  else if( hitMeshName.includes( "Sphere" ) ) onSphereHit( cam, scn );
+  else if( hitMeshName.includes( "Pod" ) ) onPodHit( cam, scn );
+  else if( hitMeshName.includes( "Chair" ) ) onChairHit( cam, scn );
+}
+
+async function onBoxHit( cam : ArcRotateCamera, scn : Scene )
+{
+  OnAnyMeshHit();
+  await cameraAnimation( "Box", cam, scn );
+}
+
+async function onSphereHit( cam : ArcRotateCamera, scn : Scene )
+{
+  OnAnyMeshHit();
+  await cameraAnimation( "Sphere", cam, scn );
+}
+
+async function onPodHit( cam : ArcRotateCamera, scn : Scene )
+{
+  OnAnyMeshHit();
+  await cameraAnimation( "Pod", cam, scn );
+}
+
+async function onChairHit( cam : ArcRotateCamera, scn : Scene )
+{
+  OnAnyMeshHit();
+  await cameraAnimation( "Chair", cam, scn );
+}
+
+function OnAnyMeshHit()
+{
+
+}
+
+
+
+
+
+var currentPosition : PostiionType = "All";
 var isAnimation = false;
 
 async function cameraAnimation( goalPosition: PostiionType, targetCamera: ArcRotateCamera, scene: Scene ) 
-{
-  if( currentPosition == goalPosition )
-  {
-    console.log( "同じ場所なのでアニメーションを中断します." );
-    return;
-  }
-
+{  
   if( isAnimation == true )
   {
     console.log( "現在アニメーション中です." );
     return;
   }
+
+  if( currentPosition == goalPosition )
+  {
+    console.log( "同じ場所なのでアニメーションを中断します. isOpen : " + isOpen );
+    
+    // if( isOpen == 1 ) closeScreenWindow();
+    // else oepnScreenWindow();
+    
+    return;
+  }
+  else
+  {
+    // if( isOpen = 1 ) closeScreenWindow();
+    // 閉じてる時はアニメーションがあるので開かない.
+  }
+
   isAnimation = true;
 
   // var start = getPostiionValue( currentPosition );
@@ -329,6 +424,9 @@ async function cameraAnimation( goalPosition: PostiionType, targetCamera: ArcRot
 
 
   var anim = scene.beginAnimation( targetCamera, 0, 50, false, 2 );
+
+
+  // アニメーション待機.
   await anim.waitAsync();
   // targetCamera.position = goal;
   anim.stop();
@@ -338,15 +436,24 @@ async function cameraAnimation( goalPosition: PostiionType, targetCamera: ArcRot
 
   isAnimation = false;
 
+  
+  // if( isOpen == 0 )
+  // {
+  //   oepnScreenWindow();
+  // }
+
 }
+
 
 function getPostiionValue( key : PostiionType )
 {
   switch ( key )
   {
-    case "Center": return new Vector3( 0, 1, -5 );
-    case "Right": return new Vector3( 1, 1, -2 );
-    case "Left": return new Vector3( -1, 1, -2 );
+    case "All": return new Vector3( 0, 1, -5 );
+    case "Box": return new Vector3( 1, 1, -2 );
+    case "Sphere": return new Vector3( -1, 1, -2 );
+    case "Chair": return new Vector3( 0, 1, -2 );
+    case "Pod": return new Vector3( 0, 2, -1 );
   }
 }
 
@@ -354,8 +461,26 @@ function getCameraTargetValue( key : PostiionType )
 {
   switch ( key )
   {
-    case "Center": return new Vector3( 0, 1, 0 );
-    case "Right": return new Vector3( 1, 0.5, 0 );
-    case "Left": return new Vector3( -1, 0.5, 0 );
+    case "All": return new Vector3( 0, 1, 0 );
+    case "Box": return new Vector3( 1, 0.5, 0 );
+    case "Sphere": return new Vector3( -1, 0.5, 0 );
+    case "Chair": return new Vector3( 0, 1, 0 );
+    case "Pod": return new Vector3( 0, 1.5, 0 );
   }
+}
+
+
+
+var isOpen = 0;
+function oepnScreenWindow()
+{
+  advancedTextureForWindow.addControl( windowImg );
+  isOpen = 1;
+    
+}
+
+function closeScreenWindow()
+{
+  advancedTextureForWindow.removeControl( windowImg );
+  isOpen = 0;  
 }
