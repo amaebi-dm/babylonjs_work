@@ -7,7 +7,7 @@ import
   Mesh, 
   loadAssetContainerAsync, 
   Scene, 
-  Color3, 
+  // Color3, 
   Color4, 
   Vector3, 
   Layer,
@@ -15,7 +15,7 @@ import
   ArcRotateCamera,
   HemisphericLight, 
   MeshBuilder, 
-  StandardMaterial, 
+  // StandardMaterial, 
   Animation, 
   SceneLoader, 
   // UtilityLayerRenderer,
@@ -182,7 +182,7 @@ import "@babylonjs/loaders/SPLAT";
 
 
 
-var advancedTextureForWindow: GUI.AdvancedDynamicTexture;
+// var advancedTextureForWindow: GUI.AdvancedDynamicTexture;
 var windowImg: GUI.Image;
 
 type PostiionType = "Box" | "Chair" | "Pod" | "Sphere" | "All" ;
@@ -211,7 +211,7 @@ const main = async () =>
   // scene.createDefaultCameraOrLight(true, true, true);
   // scene.createDefaultCameraOrLight(false, true, false);
   const camera = new ArcRotateCamera( "camera1", 0, 0, 5, new Vector3( 0, 1, 0 ), scene );
-  camera.position = new Vector3( 0, 1, -5 );
+  camera.position = new Vector3( 0, 1, -3 );
   camera.attachControl( false ); 
   new HemisphericLight('light', new Vector3(0,0,0),scene);
 
@@ -229,7 +229,7 @@ const main = async () =>
 
 
   // ground
-  MeshBuilder.CreateGround( "ground", { width: 10, height: 10 } );
+  // MeshBuilder.CreateGround( "ground", { width: 10, height: 10 } );
 
   // メッシュヒット.
   scene.onPointerDown = function( evt, pickInfo )
@@ -253,81 +253,81 @@ const main = async () =>
 
 
   // box
-  var box = MeshBuilder.CreateBox( "Box_MESH", { width: 0.3, height: 0.3, depth: 0.3 }, scene );
-  box.position.x = 1;
-  box.position.y = 0.5;
-  var boxmat = new StandardMaterial( "boxmat", scene );
-  boxmat.diffuseColor = new Color3( 1, 0, 0 );
-  box.material = boxmat;
+  // var box = MeshBuilder.CreateBox( "Box_MESH", { width: 0.3, height: 0.3, depth: 0.3 }, scene );
+  // box.position.x = 1;
+  // box.position.y = 0.5;
+  // var boxmat = new StandardMaterial( "boxmat", scene );
+  // boxmat.diffuseColor = new Color3( 1, 0, 0 );
+  // box.material = boxmat;
 
-  var boxUiPlane =  MeshBuilder.CreatePlane("boxUiPlane", { width: 0.5, height: 0.5 });
-  boxUiPlane.parent = box;
-  boxUiPlane.position.y = 0.3;
+  // var boxUiPlane =  MeshBuilder.CreatePlane("boxUiPlane", { width: 0.5, height: 0.5 });
+  // boxUiPlane.parent = box;
+  // boxUiPlane.position.y = 0.3;
 
-  boxUiPlane.billboardMode = Mesh.BILLBOARDMODE_ALL;
+  // boxUiPlane.billboardMode = Mesh.BILLBOARDMODE_ALL;
 
-  var advancedTextureBox = GUI.AdvancedDynamicTexture.CreateForMesh( boxUiPlane );
+  // var advancedTextureBox = GUI.AdvancedDynamicTexture.CreateForMesh( boxUiPlane );
 
-  var boxTxt = new GUI.TextBlock();
-  boxTxt.text = "BOX";
-  boxTxt.color = "white";
-  boxTxt.fontSize = 220;
-  boxTxt.isPointerBlocker = false;
-  var boxButton = GUI.Button.CreateSimpleButton( "boxBtn", "🔎" );
-  boxButton.width = 0.2;
-  boxButton.height = 0.2;
-  boxButton.color = "white";
-  boxButton.fontSize = 100;
-  boxButton.background = "blue";
-  boxButton.left = 400;
-  boxButton.top = -100;
-  boxButton.zIndex = 1;
-  boxButton.onPointerUpObservable.add( async function() 
-  {
-      console.log( "box clicked!!" );
-      if ( isOpen == 0 ) oepnScreenWindow();
-      else closeScreenWindow();
-  });
-  advancedTextureBox.addControl( boxButton );
-  advancedTextureBox.addControl( boxTxt );
+  // var boxTxt = new GUI.TextBlock();
+  // boxTxt.text = "BOX";
+  // boxTxt.color = "white";
+  // boxTxt.fontSize = 220;
+  // boxTxt.isPointerBlocker = false;
+  // var boxButton = GUI.Button.CreateSimpleButton( "boxBtn", "🔎" );
+  // boxButton.width = 0.2;
+  // boxButton.height = 0.2;
+  // boxButton.color = "white";
+  // boxButton.fontSize = 100;
+  // boxButton.background = "blue";
+  // boxButton.left = 400;
+  // boxButton.top = -100;
+  // boxButton.zIndex = 1;
+  // boxButton.onPointerUpObservable.add( async function() 
+  // {
+  //     console.log( "box clicked!!" );
+  //     if ( isOpen == 0 ) oepnScreenWindow();
+  //     else closeScreenWindow();
+  // });
+  // advancedTextureBox.addControl( boxButton );
+  // advancedTextureBox.addControl( boxTxt );
 
   // sphere
-  var sphere = MeshBuilder.CreateSphere( "Sphere_MESH", { segments: 0.3, diameter: 0.3 }, scene );
-  sphere.position.x = -1;
-  sphere.position.y = 0.5;
-  var spheremat = new StandardMaterial( "spheremat", scene );
-  spheremat.diffuseColor = new Color3( 0, 0, 1 );
-  sphere.material = spheremat;
+  // var sphere = MeshBuilder.CreateSphere( "Sphere_MESH", { segments: 0.3, diameter: 0.3 }, scene );
+  // sphere.position.x = -1;
+  // sphere.position.y = 0.5;
+  // var spheremat = new StandardMaterial( "spheremat", scene );
+  // spheremat.diffuseColor = new Color3( 0, 0, 1 );
+  // sphere.material = spheremat;
 
-  var sphereUiPlane =  MeshBuilder.CreatePlane("sphereUiPlane", { width: 0.5, height: 0.5 });
-  sphereUiPlane.parent = sphere;
-  sphereUiPlane.position.y = 0.3;
+  // var sphereUiPlane =  MeshBuilder.CreatePlane("sphereUiPlane", { width: 0.5, height: 0.5 });
+  // sphereUiPlane.parent = sphere;
+  // sphereUiPlane.position.y = 0.3;
 
-  sphereUiPlane.billboardMode = Mesh.BILLBOARDMODE_ALL;
+  // sphereUiPlane.billboardMode = Mesh.BILLBOARDMODE_ALL;
 
-  var advancedTextureSphere = GUI.AdvancedDynamicTexture.CreateForMesh( sphereUiPlane );
+  // var advancedTextureSphere = GUI.AdvancedDynamicTexture.CreateForMesh( sphereUiPlane );
 
-  var spTxt = new GUI.TextBlock();
-  spTxt.text = "SPHERE";
-  spTxt.color = "white";
-  spTxt.fontSize = 220;
-  var spButton = GUI.Button.CreateSimpleButton( "spBtn", "🔎" );
-  spButton.width = 0.2;
-  spButton.height = 0.2;
-  spButton.color = "white";
-  spButton.fontSize = 100;
-  spButton.background = "blue";
-  spButton.left = 400;
-  spButton.top = -100;
-  spButton.zIndex = 1;
-  spButton.onPointerUpObservable.add( async function() 
-  {
-      console.log( "sphere clicked!!" );
-      if ( isOpen == 0 ) oepnScreenWindow();
-      else closeScreenWindow();
-  });
-  advancedTextureSphere.addControl( spButton );
-  advancedTextureSphere.addControl( spTxt );
+  // var spTxt = new GUI.TextBlock();
+  // spTxt.text = "SPHERE";
+  // spTxt.color = "white";
+  // spTxt.fontSize = 220;
+  // var spButton = GUI.Button.CreateSimpleButton( "spBtn", "🔎" );
+  // spButton.width = 0.2;
+  // spButton.height = 0.2;
+  // spButton.color = "white";
+  // spButton.fontSize = 100;
+  // spButton.background = "blue";
+  // spButton.left = 400;
+  // spButton.top = -100;
+  // spButton.zIndex = 1;
+  // spButton.onPointerUpObservable.add( async function() 
+  // {
+  //     console.log( "sphere clicked!!" );
+  //     if ( isOpen == 0 ) oepnScreenWindow();
+  //     else closeScreenWindow();
+  // });
+  // advancedTextureSphere.addControl( spButton );
+  // advancedTextureSphere.addControl( spTxt );
 
 
 
@@ -343,7 +343,7 @@ const main = async () =>
 
 
   // ScreenUI/Button
-  advancedTextureForWindow = GUI.AdvancedDynamicTexture.CreateFullscreenUI("WindowCanvas");
+  // advancedTextureForWindow = GUI.AdvancedDynamicTexture.CreateFullscreenUI("WindowCanvas");
   var advancedTextureButton = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
 
   var button = GUI.Button.CreateSimpleButton("but1", "Buttton");
@@ -389,18 +389,18 @@ const main = async () =>
   podM.position.x = 0;
   podM.position.y = 1.5;
 
-  var podUiPlane =  MeshBuilder.CreatePlane("podUiPlane", { width: 0.5, height: 0.5 });
-  podUiPlane.parent = podM;
-  podUiPlane.position.y = 0.2;
-  podUiPlane.billboardMode = Mesh.BILLBOARDMODE_ALL;
+  // var podUiPlane =  MeshBuilder.CreatePlane("podUiPlane", { width: 0.5, height: 0.5 });
+  // podUiPlane.parent = podM;
+  // podUiPlane.position.y = 0.2;
+  // podUiPlane.billboardMode = Mesh.BILLBOARDMODE_ALL;
 
-  var podAdvancedTexture = GUI.AdvancedDynamicTexture.CreateForMesh( podUiPlane );
+  // var podAdvancedTexture = GUI.AdvancedDynamicTexture.CreateForMesh( podUiPlane );
 
-  var podTxt = new GUI.TextBlock();
-  podTxt.text = "POD";
-  podTxt.color = "white";
-  podTxt.fontSize = 220;
-  podAdvancedTexture.addControl( podTxt );
+  // var podTxt = new GUI.TextBlock();
+  // podTxt.text = "POD";
+  // podTxt.color = "white";
+  // podTxt.fontSize = 220;
+  // podAdvancedTexture.addControl( podTxt );
 
 
 
@@ -606,7 +606,7 @@ function getPostiionValue( key : PostiionType )
 {
   switch ( key )
   {
-    case "All": return new Vector3( 0, 1, -5 );
+    case "All": return new Vector3( 0, 1, -3 );
     case "Box": return new Vector3( 1, 1, -2 );
     case "Sphere": return new Vector3( -1, 1, -2 );
     case "Chair": return new Vector3( 0, 1, -2 );
@@ -629,15 +629,15 @@ function getCameraTargetValue( key : PostiionType )
 
 
 var isOpen = 0;
-function oepnScreenWindow()
-{
-  advancedTextureForWindow.addControl( windowImg );
-  isOpen = 1;
+// function oepnScreenWindow()
+// {
+//   advancedTextureForWindow.addControl( windowImg );
+//   isOpen = 1;
     
-}
+// }
 
-function closeScreenWindow()
-{
-  advancedTextureForWindow.removeControl( windowImg );
-  isOpen = 0;  
-}
+// function closeScreenWindow()
+// {
+//   advancedTextureForWindow.removeControl( windowImg );
+//   isOpen = 0;  
+// }
