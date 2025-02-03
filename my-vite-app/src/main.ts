@@ -246,7 +246,7 @@ const main = async () =>
       if( pickedMesh.includes( "_MESH" ) )
       {
         console.log( "mesh にヒット ( " + pickedMesh + " )" + evt );
-        onMeshHit( pickedMesh, camera, scene );
+        // onMeshHit( pickedMesh, camera, scene );
       }
     }
   }
@@ -463,25 +463,25 @@ main();
 
 
 
-async function onMeshHit( hitMeshName : string, cam : ArcRotateCamera, scn : Scene )
-{
-  if( hitMeshName.includes( "Box" ) ) await onBoxHit( cam, scn );
-  else if( hitMeshName.includes( "Sphere" ) ) onSphereHit( cam, scn );
-  else if( hitMeshName.includes( "Pod" ) ) console.log( "一旦無効" ); //onPodHit( cam, scn );
-  else if( hitMeshName.includes( "Chair" ) ) onChairHit( cam, scn );
-}
+// async function onMeshHit( hitMeshName : string, cam : ArcRotateCamera, scn : Scene )
+// {
+//   if( hitMeshName.includes( "Box" ) ) await onBoxHit( cam, scn );
+//   else if( hitMeshName.includes( "Sphere" ) ) onSphereHit( cam, scn );
+//   else if( hitMeshName.includes( "Pod" ) ) console.log( "一旦無効" ); //onPodHit( cam, scn );
+//   else if( hitMeshName.includes( "Chair" ) ) onChairHit( cam, scn );
+// }
 
-async function onBoxHit( cam : ArcRotateCamera, scn : Scene )
-{
-  OnAnyMeshHit();
-  await cameraAnimation( "Box", cam, scn );
-}
+// async function onBoxHit( cam : ArcRotateCamera, scn : Scene )
+// {
+//   OnAnyMeshHit();
+//   await cameraAnimation( "Box", cam, scn );
+// }
 
-async function onSphereHit( cam : ArcRotateCamera, scn : Scene )
-{
-  OnAnyMeshHit();
-  await cameraAnimation( "Sphere", cam, scn );
-}
+// async function onSphereHit( cam : ArcRotateCamera, scn : Scene )
+// {
+//   OnAnyMeshHit();
+//   await cameraAnimation( "Sphere", cam, scn );
+// }
 
 // async function onPodHit( cam : ArcRotateCamera, scn : Scene )
 // {
@@ -489,16 +489,16 @@ async function onSphereHit( cam : ArcRotateCamera, scn : Scene )
 //   await cameraAnimation( "Pod", cam, scn );
 // }
 
-async function onChairHit( cam : ArcRotateCamera, scn : Scene )
-{
-  OnAnyMeshHit();
-  await cameraAnimation( "Chair", cam, scn );
-}
+// async function onChairHit( cam : ArcRotateCamera, scn : Scene )
+// {
+//   OnAnyMeshHit();
+//   await cameraAnimation( "Chair", cam, scn );
+// }
 
-function OnAnyMeshHit()
-{
+// function OnAnyMeshHit()
+// {
 
-}
+// }
 
 
 
