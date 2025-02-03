@@ -467,7 +467,7 @@ async function onMeshHit( hitMeshName : string, cam : ArcRotateCamera, scn : Sce
 {
   if( hitMeshName.includes( "Box" ) ) await onBoxHit( cam, scn );
   else if( hitMeshName.includes( "Sphere" ) ) onSphereHit( cam, scn );
-  else if( hitMeshName.includes( "Pod" ) ) onPodHit( cam, scn );
+  else if( hitMeshName.includes( "Pod" ) ) console.log( "一旦無効" ); //onPodHit( cam, scn );
   else if( hitMeshName.includes( "Chair" ) ) onChairHit( cam, scn );
 }
 
@@ -483,11 +483,11 @@ async function onSphereHit( cam : ArcRotateCamera, scn : Scene )
   await cameraAnimation( "Sphere", cam, scn );
 }
 
-async function onPodHit( cam : ArcRotateCamera, scn : Scene )
-{
-  OnAnyMeshHit();
-  await cameraAnimation( "Pod", cam, scn );
-}
+// async function onPodHit( cam : ArcRotateCamera, scn : Scene )
+// {
+//   OnAnyMeshHit();
+//   await cameraAnimation( "Pod", cam, scn );
+// }
 
 async function onChairHit( cam : ArcRotateCamera, scn : Scene )
 {
