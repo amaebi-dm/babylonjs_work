@@ -18,11 +18,13 @@ import
   StandardMaterial, 
   Animation, 
   SceneLoader, 
-  UtilityLayerRenderer,
-  PositionGizmo,
+  // UtilityLayerRenderer,
+  // PositionGizmo,
   SineEase
 } 
 from "@babylonjs/core";
+
+// import { HtmlMeshRenderer, HtmlMesh } from "babylon-htmlmesh";
 
 import '@babylonjs/loaders/glTF';
 
@@ -39,6 +41,144 @@ import "@babylonjs/loaders/SPLAT";
 // import spzUrl from "/assets/test600.spz?url";
 // import spzUrl from "/assets/light.spz?url";
 // import bgUrl from "/assets/bg.jpeg?url";
+
+
+// import { Scene } from "@babylonjs/core/scene";
+// import { Engine } from "@babylonjs/core/Engines/engine";
+// import { MeshBuilder } from "@babylonjs/core/Meshes/meshBuilder";
+// import { ActionManager } from "@babylonjs/core/Actions/actionManager";
+// import { ExecuteCodeAction } from "@babylonjs/core/Actions/directActions";
+// import { Color4 } from "@babylonjs/core/Maths/math.color";
+// import "@babylonjs/core/Helpers/sceneHelpers";
+
+// import { HtmlMeshRenderer } from "./node_modules/babylon-htmlmesh/dist/babylon-htmlmesh-renderer";
+// import { HtmlMesh } from "./src/html-mesh";
+
+
+
+
+// const createHtmlMeshInstances = ( scene : Scene ) => 
+// {
+//   // var windowKey : String;
+//   // var htmlMeshPackage : Window;
+//   for (const [key, value] of Object.entries(window)) 
+//   {
+//     if ( key == "babylon-htmlmesh" ) console.log( value );
+//     else console.log( "-----" );
+//   }
+//   const htmlMeshPackage = window[ "babylon-htmlmesh" ];
+//   const HtmlMesh = htmlMeshPackage.HtmlMesh;
+//   const HtmlMeshRenderer = htmlMeshPackage.HtmlMeshRenderer;
+
+//   // Create the HtmlMeshRenderer
+//   const htmlMeshRenderer = new HtmlMeshRenderer(scene);
+
+//   // Shows how this can be used to include html content, such
+//   // as a form, in your scene.  This can be used to create
+//   // richer UIs than can be created with the standard Babylon
+//   // UI control, albeit with the restriction that such UIs would
+//   // not display in native mobile apps or XR applications.
+//   const htmlMeshDiv = new HtmlMesh(scene, "html-mesh-div");
+//   const div = document.createElement('div');
+//   div.innerHTML = `
+//       <form style="padding: 10px; transform-origin: 0 0; scale: 4">
+//           <label for="name">Name:</label>
+//           <input type="text" id="name" name="name" required><br><br>
+          
+//           <label for="country">Country:</label>
+//           <select id="country" name="country">
+//               <option value="USA">USA</option>
+//               <option value="Canada">Canada</option>
+//               <option value="UK">UK</option>
+//               <option value="Australia">Australia</option>
+//           </select><br><br>
+          
+//           <label for="hobbies">Hobbies:</label><br>
+//           <input type="checkbox" id="hobby1" name="hobbies" value="Reading">
+//           <label for="hobby1">Reading</label><br>
+//           <input type="checkbox" id="hobby2" name="hobbies" value="Gaming">
+//           <label for="hobby2">Gaming</label><br>
+//           <input type="checkbox" id="hobby3" name="hobbies" value="Sports">
+//           <label for="hobby3">Sports</label><br><br>
+//       </form>
+//   `;
+//   div.style.backgroundColor = 'white';
+//   div.style.width = '480px';
+//   div.style.height = '360px';
+//   // Style the form
+  
+//   htmlMeshDiv.setContent(div, 4, 3);
+//   htmlMeshDiv.position.x = -3;
+//   htmlMeshDiv.position.y = 2;
+
+  // Shows how this can be used to include a PDF in your scene.  Note this is 
+  // conceptual only.  Displaying a PDF like this works, but any links in the
+  // PDF will navigate the current tab, which is probably not what you want.
+  // There are other solutions out there such as PDF.js that may give you more
+  // control, but ultimately proper display of PDFs is not within the scope of
+  // this project.
+  // const pdfUrl = 'https://cdn.glitch.com/3da1885b-3463-4252-8ded-723332b5de34%2FNew_Horizons.pdf#zoom=75?v=1599831745689'
+  // const htmlMeshPdf = new HtmlMesh(scene, "html-mesh-pdf");
+  // const iframePdf = document.createElement('iframe');
+  // iframePdf.src = pdfUrl;
+  // iframePdf.width = '480px';
+  // iframePdf.height = '360px';
+  // htmlMeshPdf.setContent(iframePdf, 4, 3);
+  // htmlMeshPdf.position.x = 3;
+  // htmlMeshPdf.position.y = 2;
+
+  // Shows how this can be used to include a website in your scene
+  // const siteUrl = 'https://www.babylonjs.com/';
+  // const htmlMeshSite = new HtmlMesh(scene, "html-mesh-site");
+  // const iframeSite = document.createElement('iframe');
+  // iframeSite.src = siteUrl;
+  // iframeSite.width = '480px';
+  // iframeSite.height = '360px';
+  // htmlMeshSite.setContent(iframeSite, 4, 3);
+  // htmlMeshSite.position.x = -3;
+  // htmlMeshSite.position.y = -2;
+  // htmlMeshSite.rotation.y = Math.PI / 4;
+  
+  // Shows how this can be used to include a YouTube video in your scene
+  // const videoId = 'zELYw2qEUjI';
+  // const videoUrl = [ 'https://www.youtube.com/embed/', videoId, '?rel=0&enablejsapi=1&disablekb=1&controls=0&fs=0&modestbranding=1' ].join( '' );
+  // const htmlMeshVideo = new HtmlMesh(scene, "html-mesh-video");
+  // const iframeVideo = document.createElement('iframe');
+  // iframeVideo.src = videoUrl;
+  // iframeVideo.width = '480px';
+  // iframeVideo.height = '360px';
+  // htmlMeshVideo.setContent(iframeVideo, 4, 3);
+  // htmlMeshVideo.position.x = 3;
+  // htmlMeshVideo.position.y = -2;
+
+  // Shows how to create an HTML Overlay
+//   const overlayMesh = new HtmlMesh(scene, "html-overlay-mesh", { isCanvasOverlay: true });
+//   const overlayMeshDiv = document.createElement('div');
+//   overlayMeshDiv.innerHTML = `<p style="padding: 60px; font-size: 80px;">This is an overlay. It is positioned in front of the canvas. This allows it to have transparency and to be non-rectangular, but it will always show over any other content in the scene</p>`;
+//   overlayMeshDiv.style.backgroundColor = 'rgba(0,255,0,0.49)';
+//   overlayMeshDiv.style.width = '120px';
+//   overlayMeshDiv.style.height = '90px';
+//   overlayMeshDiv.style.display = 'flex';
+//   overlayMeshDiv.style.alignItems = 'center';
+//   overlayMeshDiv.style.justifyContent = 'center';
+//   overlayMeshDiv.style.borderRadius = '20px';
+//   overlayMeshDiv.style.fontSize = 'xx-small';
+//   overlayMeshDiv.style.padding = '10px';
+//   // Style the form
+
+//   overlayMesh.setContent(overlayMeshDiv, 4, 3);
+//   overlayMesh.position.z = 5;
+// }
+
+
+
+
+// const url = "https://cdn.jsdelivr.net/npm/babylon-htmlmesh/dist/umd/babylon-htmlmesh.min.js";
+// const htmlMeshScript = document.createElement("script");
+// htmlMeshScript.type = "module";
+// htmlMeshScript.src = url;
+// document.body.appendChild(htmlMeshScript);
+
 
 
 
@@ -79,13 +219,13 @@ const main = async () =>
 
 
   // Gizomo.
-  var center = MeshBuilder.CreateBox( "center", { width: 0.05, height: 0.05, depth: 0.05 }, scene);
-  var centerMat = new StandardMaterial( "centermat", scene );
-  centerMat.diffuseColor = new Color3( 1, 1, 0 );
-  center.material = centerMat;
-  const utilLayer = new UtilityLayerRenderer(scene);
-  const gizmo = new PositionGizmo(utilLayer);
-  gizmo.attachedMesh = center;
+  // var center = MeshBuilder.CreateBox( "center", { width: 0.05, height: 0.05, depth: 0.05 }, scene);
+  // var centerMat = new StandardMaterial( "centermat", scene );
+  // centerMat.diffuseColor = new Color3( 1, 1, 0 );
+  // center.material = centerMat;
+  // const utilLayer = new UtilityLayerRenderer(scene);
+  // const gizmo = new PositionGizmo(utilLayer);
+  // gizmo.attachedMesh = center;
 
 
   // ground
@@ -242,7 +382,8 @@ const main = async () =>
 
   // Pod/SPZ.
   // ここで読み込んでる
-  var pod = await loadAssetContainerAsync( "https://vxv.co.jp/bizb/wp-content/uploads/temporary/pod.spz" ,scene);
+  // var pod = await loadAssetContainerAsync( "https://vxv.co.jp/bizb/wp-content/uploads/temporary/pod.spz" ,scene);
+  var pod = await loadAssetContainerAsync( "https://vxvcojp.xsrv.jp/sandbox/p/p0168_3dgs/light.spz" ,scene);
   var podM = pod.meshes[0];
   podM.name = "Pod_SPZ_MESH";
   podM.position.x = 0;
@@ -296,9 +437,20 @@ const main = async () =>
 
   });
 
+
+
+
+  // htmlMeshScript.onload = (event) => {
+  //   console.log("babylon-htmlmesh loaded");
+  //   createHtmlMeshInstances(scene);
+  // }
+
+  // createHtmlMeshInstances(scene);
   
   
 };
+
+
 
 main();
 
@@ -306,6 +458,11 @@ main();
 
 
 // function.
+
+
+
+
+
 async function onMeshHit( hitMeshName : string, cam : ArcRotateCamera, scn : Scene )
 {
   if( hitMeshName.includes( "Box" ) ) await onBoxHit( cam, scn );
