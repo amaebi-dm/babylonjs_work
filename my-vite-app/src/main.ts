@@ -56,6 +56,9 @@ import "@babylonjs/loaders/SPLAT";
 // import { HtmlMesh } from "./src/html-mesh";
 
 
+import { testSt, Test } from "./moveButton";
+
+
 
 
 // const createHtmlMeshInstances = ( scene : Scene ) => 
@@ -191,6 +194,10 @@ import "@babylonjs/loaders/SPLAT";
 
 const main = async () => 
 {
+  console.log( "EXPORT TEST" );
+  console.log( testSt );
+  Test();
+
   const renderCanvas =
     document.querySelector<HTMLCanvasElement>("#renderCanvas");
   if (!renderCanvas) {
@@ -604,8 +611,8 @@ const main = async () =>
 
   // Pod/SPZ.
   // ここで読み込んでる
-  // var pod = await loadAssetContainerAsync( "https://vxv.co.jp/bizb/wp-content/uploads/temporary/pod.spz" ,scene);
-  var pod = await loadAssetContainerAsync( "https://vxvcojp.xsrv.jp/sandbox/p/p0168_3dgs/light.spz" ,scene);
+  var pod = await loadAssetContainerAsync( "https://vxv.co.jp/bizb/wp-content/uploads/temporary/pod.spz" ,scene);
+  // var pod = await loadAssetContainerAsync( "https://vxvcojp.xsrv.jp/sandbox/p/p0168_3dgs/light.spz" ,scene);
   var podM = pod.meshes[0];
   podM.name = "Pod_SPZ_MESH";
   podM.position.x = 0;
@@ -711,6 +718,8 @@ function AddPosition( key : String, camera : UniversalCamera )
   current.y += y;
   current.z += z;
   camera.position = current;
+
+  
 
   var currentRot = camera.rotation;
   currentRot.x += xRot;
