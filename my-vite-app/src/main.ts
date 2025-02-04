@@ -450,13 +450,15 @@ const main = async () =>
   {
     OnDirectionButtonPointerUp( "RIGHT" );
   });
+
+
   var buttonFRONT = GUI.Button.CreateSimpleButton("btnF", "△");
-  buttonFRONT.top = "-125px";
-  buttonFRONT.left = "200px";
+  buttonFRONT.top = "-265px";
+  buttonFRONT.left = "100px";
   buttonFRONT.width = "45px";
   buttonFRONT.height = "45px";
   buttonFRONT.color = "white";
-  buttonFRONT.background = "green";
+  buttonFRONT.background = "red";
   buttonFRONT.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
   buttonFRONT.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
   buttonFRONT.onPointerDownObservable.add( () => 
@@ -468,12 +470,12 @@ const main = async () =>
     OnDirectionButtonPointerUp( "FRONT" );
   });
   var buttonBACK = GUI.Button.CreateSimpleButton("btnB", "▽");
-  buttonBACK.top = "-75px";
-  buttonBACK.left = "200px";
+  buttonBACK.top = "-215px";
+  buttonBACK.left = "100px";
   buttonBACK.width = "45px";
   buttonBACK.height = "45px";
   buttonBACK.color = "white";
-  buttonBACK.background = "green";
+  buttonBACK.background = "red";
   buttonBACK.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
   buttonBACK.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
   buttonBACK.onPointerDownObservable.add( () => 
@@ -483,6 +485,78 @@ const main = async () =>
   buttonBACK.onPointerUpObservable.add( () => 
   {
     OnDirectionButtonPointerUp( "BACK" );
+  });
+
+
+
+
+  var buttonTOPROT = GUI.Button.CreateSimpleButton("btnTR", "△");
+  buttonTOPROT.top = "-150px";
+  buttonTOPROT.left = "250px";
+  buttonTOPROT.width = "45px";
+  buttonTOPROT.height = "45px";
+  buttonTOPROT.color = "white";
+  buttonTOPROT.background = "blue";
+  buttonTOPROT.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+  buttonTOPROT.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
+  buttonTOPROT.onPointerDownObservable.add( () => 
+  {
+    OnDirectionButtonPointerDown( "TOPROT" );
+  });
+  buttonTOPROT.onPointerUpObservable.add( () => 
+  {
+    OnDirectionButtonPointerUp( "TOPROT" );
+  });
+  var buttonBOTTOMROT = GUI.Button.CreateSimpleButton("btnDR", "▽");
+  buttonBOTTOMROT.top = "-50px";
+  buttonBOTTOMROT.left = "250px";
+  buttonBOTTOMROT.width = "45px";
+  buttonBOTTOMROT.height = "45px";
+  buttonBOTTOMROT.color = "white";
+  buttonBOTTOMROT.background = "blue";
+  buttonBOTTOMROT.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+  buttonBOTTOMROT.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
+  buttonBOTTOMROT.onPointerDownObservable.add( () => 
+  {
+    OnDirectionButtonPointerDown( "BOTTOMROT" );
+  });
+  buttonBOTTOMROT.onPointerUpObservable.add( () => 
+  {
+    OnDirectionButtonPointerUp( "BOTTOMROT" );
+  });
+  var buttonLEFTROT = GUI.Button.CreateSimpleButton("btnLR", "<");
+  buttonLEFTROT.top = "-100px";
+  buttonLEFTROT.left = "200px";
+  buttonLEFTROT.width = "45px";
+  buttonLEFTROT.height = "45px";
+  buttonLEFTROT.color = "white";
+  buttonLEFTROT.background = "blue";
+  buttonLEFTROT.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+  buttonLEFTROT.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
+  buttonLEFTROT.onPointerDownObservable.add( () => 
+  {
+    OnDirectionButtonPointerDown( "LEFTROT" );   
+  });
+  buttonLEFTROT.onPointerUpObservable.add( () => 
+  {
+    OnDirectionButtonPointerUp( "LEFTROT" );
+  });
+  var buttonRIGHTROT = GUI.Button.CreateSimpleButton("btnRR", ">");
+  buttonRIGHTROT.top = "-100px";
+  buttonRIGHTROT.left = "300px";
+  buttonRIGHTROT.width = "45px";
+  buttonRIGHTROT.height = "45px";
+  buttonRIGHTROT.color = "white";
+  buttonRIGHTROT.background = "blue";
+  buttonRIGHTROT.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
+  buttonRIGHTROT.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
+  buttonRIGHTROT.onPointerDownObservable.add( () => 
+  {
+    OnDirectionButtonPointerDown( "RIGHTROT" ); 
+  });
+  buttonRIGHTROT.onPointerUpObservable.add( () => 
+  {
+    OnDirectionButtonPointerUp( "RIGHTROT" );
   });
 
 
@@ -501,7 +575,8 @@ const main = async () =>
   {
     console.log( "center click" ); 
     camera.position = new Vector3( 0, 1, -3 );
-    console.log( camera.position );
+    camera.rotation = new Vector3( 0, 0, 0 );
+    // console.log( camera.position );
   });
 
   advancedTextureButton.addControl( buttonTOP );
@@ -511,6 +586,11 @@ const main = async () =>
   advancedTextureButton.addControl( buttonFRONT );
   advancedTextureButton.addControl( buttonBACK );
   advancedTextureButton.addControl( buttonCENTER );
+
+  advancedTextureButton.addControl( buttonTOPROT );
+  advancedTextureButton.addControl( buttonBOTTOMROT );
+  advancedTextureButton.addControl( buttonLEFTROT );
+  advancedTextureButton.addControl( buttonRIGHTROT );
 
   // ScreenUI/Image
   // var img = new GUI.Image( "window", "/assets/window.png" );
@@ -607,7 +687,10 @@ function AddPosition( key : String, camera : UniversalCamera )
 {
   var x = 0;
   var y = 0;
-  var z = 0
+  var z = 0;
+  var xRot = 0;
+  var yRot = 0;
+  var zRot = 0;
   switch( key )
   {
     case "TOP": { x = 0; y = 0.01; break; } 
@@ -616,6 +699,11 @@ function AddPosition( key : String, camera : UniversalCamera )
     case "RIGHT": { x = 0.01; y = 0; break; } 
     case "FRONT": { z = 0.01; break; } 
     case "BACK": { z = -0.01; break; } 
+
+    case "TOPROT": { xRot = -0.01; break; } 
+    case "BOTTOMROT": { xRot = 0.01; break; } 
+    case "LEFTROT": { yRot = -0.01; break; } 
+    case "RIGHTROT": { yRot = 0.01; break; } 
   }
 
   var current = camera.position;
@@ -623,6 +711,12 @@ function AddPosition( key : String, camera : UniversalCamera )
   current.y += y;
   current.z += z;
   camera.position = current;
+
+  var currentRot = camera.rotation;
+  currentRot.x += xRot;
+  currentRot.y += yRot;
+  currentRot.z += zRot;
+  camera.rotation = currentRot;
 } 
 
 function OnCameraUpdate( camera : UniversalCamera )
