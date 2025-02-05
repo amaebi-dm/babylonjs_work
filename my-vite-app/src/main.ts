@@ -296,7 +296,7 @@ const main = async () =>
   
 
   var advancedTextureForLogo = GUI.AdvancedDynamicTexture.CreateFullscreenUI("LogoCanvas");
-  AddImage( "https://vxvcojp.xsrv.jp/sandbox/p/p0168_3dgs/resources/IMG_1289.webp", new Vector2( 100, 100 ), advancedTextureForLogo, GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT, GUI.Control.VERTICAL_ALIGNMENT_BOTTOM, null );
+  AddImage( "https://vxvcojp.xsrv.jp/sandbox/p/p0168_3dgs/resources/IMG_1289.webp", new Vector2( 150, 150 ), advancedTextureForLogo, GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT, GUI.Control.VERTICAL_ALIGNMENT_BOTTOM, null );
 
 
 
