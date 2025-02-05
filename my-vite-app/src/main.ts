@@ -5,16 +5,18 @@ import
 { 
   Engine, 
   // Mesh, 
-  loadAssetContainerAsync, 
+  // loadAssetContainerAsync, 
   Scene, 
   // Color3, 
   Color4, 
   Vector3, 
   Layer,
   // FlyCamera, 
-  // ArcRotateCamera,
+  ArcRotateCamera,
   HemisphericLight,
-  UniversalCamera, 
+  // UniversalCamera,
+  // Color3,
+  Vector2, 
   // MeshBuilder, 
   // StandardMaterial, 
   // Animation, 
@@ -56,7 +58,28 @@ import "@babylonjs/loaders/SPLAT";
 // import { HtmlMesh } from "./src/html-mesh";
 
 
-import { testSt, Test } from "./moveButton";
+import 
+{ 
+  // CreateMovingButtons, 
+  // OnCameraUpdate 
+} from "./moveButton";
+import 
+{ 
+  // LoadChairSampelPly, 
+  // LoadPodSampleSpz, 
+  LoadHouseSampleSpz 
+} from "./modelLoader";
+import 
+{ 
+  // AddBox, 
+  // AddSphere 
+} from "./meshCreater";
+import 
+{ 
+  GuiUtilResize, 
+  AddImage 
+} from "./guiUtil";
+
 
 
 
@@ -194,10 +217,6 @@ import { testSt, Test } from "./moveButton";
 
 const main = async () => 
 {
-  console.log( "EXPORT TEST" );
-  console.log( testSt );
-  Test();
-
   const renderCanvas =
     document.querySelector<HTMLCanvasElement>("#renderCanvas");
   if (!renderCanvas) {
@@ -218,27 +237,14 @@ const main = async () =>
   // Camera,Light 
   // scene.createDefaultCameraOrLight(true, true, true);
   // scene.createDefaultCameraOrLight(false, true, false);
-  const camera = new UniversalCamera( "camera1", new Vector3( 0, 1, 0 ), scene );
-  // const camera = new ArcRotateCamera( "camera1", 0, 0, 5, new Vector3( 0, 1, 0 ), scene );
+  // const camera = new UniversalCamera( "camera1", new Vector3( 0, 1, 0 ), scene );
+  const camera = new ArcRotateCamera( "camera1", 0, 0, 5, new Vector3( 0, 1, 0 ), scene );
   camera.position = new Vector3( 0, 1, -3 );
   camera.attachControl( false ); 
   new HemisphericLight('light', new Vector3(0,0,0),scene);
 
 
 
-
-  // Gizomo.
-  // var center = MeshBuilder.CreateBox( "center", { width: 0.05, height: 0.05, depth: 0.05 }, scene);
-  // var centerMat = new StandardMaterial( "centermat", scene );
-  // centerMat.diffuseColor = new Color3( 1, 1, 0 );
-  // center.material = centerMat;
-  // const utilLayer = new UtilityLayerRenderer(scene);
-  // const gizmo = new PositionGizmo(utilLayer);
-  // gizmo.attachedMesh = center;
-
-
-  // ground
-  // MeshBuilder.CreateGround( "ground", { width: 10, height: 10 } );
 
   // メッシュヒット.
   scene.onPointerDown = function( evt, pickInfo )
@@ -261,410 +267,36 @@ const main = async () =>
   }
 
 
+
+
   // box
-  // var box = MeshBuilder.CreateBox( "Box_MESH", { width: 0.3, height: 0.3, depth: 0.3 }, scene );
-  // box.position.x = 1;
-  // box.position.y = 0.5;
-  // var boxmat = new StandardMaterial( "boxmat", scene );
-  // boxmat.diffuseColor = new Color3( 1, 0, 0 );
-  // box.material = boxmat;
-
-  // var boxUiPlane =  MeshBuilder.CreatePlane("boxUiPlane", { width: 0.5, height: 0.5 });
-  // boxUiPlane.parent = box;
-  // boxUiPlane.position.y = 0.3;
-
-  // boxUiPlane.billboardMode = Mesh.BILLBOARDMODE_ALL;
-
-  // var advancedTextureBox = GUI.AdvancedDynamicTexture.CreateForMesh( boxUiPlane );
-
-  // var boxTxt = new GUI.TextBlock();
-  // boxTxt.text = "BOX";
-  // boxTxt.color = "white";
-  // boxTxt.fontSize = 220;
-  // boxTxt.isPointerBlocker = false;
-  // var boxButton = GUI.Button.CreateSimpleButton( "boxBtn", "🔎" );
-  // boxButton.width = 0.2;
-  // boxButton.height = 0.2;
-  // boxButton.color = "white";
-  // boxButton.fontSize = 100;
-  // boxButton.background = "blue";
-  // boxButton.left = 400;
-  // boxButton.top = -100;
-  // boxButton.zIndex = 1;
-  // boxButton.onPointerUpObservable.add( async function() 
-  // {
-  //     console.log( "box clicked!!" );
-  //     if ( isOpen == 0 ) oepnScreenWindow();
-  //     else closeScreenWindow();
-  // });
-  // advancedTextureBox.addControl( boxButton );
-  // advancedTextureBox.addControl( boxTxt );
-
+  // AddBox( "Box", new Vector3( 0.3, 0.3, 0.3 ), new Vector3( 1, 0.5, 0 ), new Color3( 1, 0, 0 ), scene );
   // sphere
-  // var sphere = MeshBuilder.CreateSphere( "Sphere_MESH", { segments: 0.3, diameter: 0.3 }, scene );
-  // sphere.position.x = -1;
-  // sphere.position.y = 0.5;
-  // var spheremat = new StandardMaterial( "spheremat", scene );
-  // spheremat.diffuseColor = new Color3( 0, 0, 1 );
-  // sphere.material = spheremat;
-
-  // var sphereUiPlane =  MeshBuilder.CreatePlane("sphereUiPlane", { width: 0.5, height: 0.5 });
-  // sphereUiPlane.parent = sphere;
-  // sphereUiPlane.position.y = 0.3;
-
-  // sphereUiPlane.billboardMode = Mesh.BILLBOARDMODE_ALL;
-
-  // var advancedTextureSphere = GUI.AdvancedDynamicTexture.CreateForMesh( sphereUiPlane );
-
-  // var spTxt = new GUI.TextBlock();
-  // spTxt.text = "SPHERE";
-  // spTxt.color = "white";
-  // spTxt.fontSize = 220;
-  // var spButton = GUI.Button.CreateSimpleButton( "spBtn", "🔎" );
-  // spButton.width = 0.2;
-  // spButton.height = 0.2;
-  // spButton.color = "white";
-  // spButton.fontSize = 100;
-  // spButton.background = "blue";
-  // spButton.left = 400;
-  // spButton.top = -100;
-  // spButton.zIndex = 1;
-  // spButton.onPointerUpObservable.add( async function() 
-  // {
-  //     console.log( "sphere clicked!!" );
-  //     if ( isOpen == 0 ) oepnScreenWindow();
-  //     else closeScreenWindow();
-  // });
-  // advancedTextureSphere.addControl( spButton );
-  // advancedTextureSphere.addControl( spTxt );
-
-
-
-
-
-
-
-  window.addEventListener("resize", () => engine.resize());
-  engine.runRenderLoop( () => 
-    { 
-      scene.render();
-      // console.log( "update" );
-      OnCameraUpdate( camera );
-    });
-
-
-
+  // AddSphere( "Sphere", new Vector2( 0.3, 0.3 ), new Vector3( -1, 0.5, 0 ), new Color3( 0, 0, 1 ), scene, () => { console.log( "引数" ) } );  
 
 
   // ScreenUI/Button
   // advancedTextureForWindow = GUI.AdvancedDynamicTexture.CreateFullscreenUI("WindowCanvas");
-  var advancedTextureButton = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
-
-  var button = GUI.Button.CreateSimpleButton("b", "Buttton");
-  // button.left = "-300px"
-  button.top = "-350px";
-  button.width = "100px";
-  button.height = "50px";
-  button.color = "white";
-  button.background = "green";
-  // button.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_CENTER;
-  // button.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_TOP;
-  button.onPointerDownObservable.add( async() => 
-  {
-    console.log( "click" );
-
-    // var currentX = camera.position.x;
-    // currentX --;
-    // camera.position.x = currentX;
-    // camera.position = new Vector3( 0, 1, -5 );
-    // camera.target = new Vector3( 0, 1, 0 );
-    // await cameraAnimation( "All", camera, scene );
+  // var advancedTextureButton = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+  // CreateMovingButtons( advancedTextureButton, camera );
   
-    
-  });
-//   button.onPointerUpObservable.add(function() {
-//     alert("you did it!");
-// });
-
-  // advancedTextureButton.addControl( button );
-
-
-  var buttonTOP = GUI.Button.CreateSimpleButton("btnT", "↑");
-  buttonTOP.top = "-150px";
-  buttonTOP.left = "100px";
-  buttonTOP.width = "45px";
-  buttonTOP.height = "45px";
-  buttonTOP.color = "white";
-  buttonTOP.background = "green";
-  buttonTOP.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-  buttonTOP.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
-  buttonTOP.onPointerDownObservable.add( () => 
-  {
-    OnDirectionButtonPointerDown( "TOP" );
-  });
-  buttonTOP.onPointerUpObservable.add( () => 
-  {
-    OnDirectionButtonPointerUp( "TOP" );
-  });
-  var buttonBOTTOM = GUI.Button.CreateSimpleButton("btnD", "↓");
-  buttonBOTTOM.top = "-50px";
-  buttonBOTTOM.left = "100px";
-  buttonBOTTOM.width = "45px";
-  buttonBOTTOM.height = "45px";
-  buttonBOTTOM.color = "white";
-  buttonBOTTOM.background = "green";
-  buttonBOTTOM.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-  buttonBOTTOM.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
-  buttonBOTTOM.onPointerDownObservable.add( () => 
-  {
-    OnDirectionButtonPointerDown( "BOTTOM" );
-  });
-  buttonBOTTOM.onPointerUpObservable.add( () => 
-  {
-    OnDirectionButtonPointerUp( "BOTTOM" );
-  });
-  var buttonLEFT = GUI.Button.CreateSimpleButton("btnL", "←");
-  buttonLEFT.top = "-100px";
-  buttonLEFT.left = "50px";
-  buttonLEFT.width = "45px";
-  buttonLEFT.height = "45px";
-  buttonLEFT.color = "white";
-  buttonLEFT.background = "green";
-  buttonLEFT.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-  buttonLEFT.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
-  buttonLEFT.onPointerDownObservable.add( () => 
-  {
-    OnDirectionButtonPointerDown( "LEFT" );   
-  });
-  buttonLEFT.onPointerUpObservable.add( () => 
-  {
-    OnDirectionButtonPointerUp( "LEFT" );
-  });
-  var buttonRIGHT = GUI.Button.CreateSimpleButton("btnR", "→");
-  buttonRIGHT.top = "-100px";
-  buttonRIGHT.left = "150px";
-  buttonRIGHT.width = "45px";
-  buttonRIGHT.height = "45px";
-  buttonRIGHT.color = "white";
-  buttonRIGHT.background = "green";
-  buttonRIGHT.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-  buttonRIGHT.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
-  buttonRIGHT.onPointerDownObservable.add( () => 
-  {
-    OnDirectionButtonPointerDown( "RIGHT" ); 
-  });
-  buttonRIGHT.onPointerUpObservable.add( () => 
-  {
-    OnDirectionButtonPointerUp( "RIGHT" );
-  });
-
-
-  var buttonFRONT = GUI.Button.CreateSimpleButton("btnF", "△");
-  buttonFRONT.top = "-265px";
-  buttonFRONT.left = "100px";
-  buttonFRONT.width = "45px";
-  buttonFRONT.height = "45px";
-  buttonFRONT.color = "white";
-  buttonFRONT.background = "red";
-  buttonFRONT.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-  buttonFRONT.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
-  buttonFRONT.onPointerDownObservable.add( () => 
-  {
-    OnDirectionButtonPointerDown( "FRONT" ); 
-  });
-  buttonFRONT.onPointerUpObservable.add( () => 
-  {
-    OnDirectionButtonPointerUp( "FRONT" );
-  });
-  var buttonBACK = GUI.Button.CreateSimpleButton("btnB", "▽");
-  buttonBACK.top = "-215px";
-  buttonBACK.left = "100px";
-  buttonBACK.width = "45px";
-  buttonBACK.height = "45px";
-  buttonBACK.color = "white";
-  buttonBACK.background = "red";
-  buttonBACK.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-  buttonBACK.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
-  buttonBACK.onPointerDownObservable.add( () => 
-  {
-    OnDirectionButtonPointerDown( "BACK" ); 
-  });
-  buttonBACK.onPointerUpObservable.add( () => 
-  {
-    OnDirectionButtonPointerUp( "BACK" );
-  });
-
-
-
-
-  var buttonTOPROT = GUI.Button.CreateSimpleButton("btnTR", "△");
-  buttonTOPROT.top = "-150px";
-  buttonTOPROT.left = "250px";
-  buttonTOPROT.width = "45px";
-  buttonTOPROT.height = "45px";
-  buttonTOPROT.color = "white";
-  buttonTOPROT.background = "blue";
-  buttonTOPROT.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-  buttonTOPROT.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
-  buttonTOPROT.onPointerDownObservable.add( () => 
-  {
-    OnDirectionButtonPointerDown( "TOPROT" );
-  });
-  buttonTOPROT.onPointerUpObservable.add( () => 
-  {
-    OnDirectionButtonPointerUp( "TOPROT" );
-  });
-  var buttonBOTTOMROT = GUI.Button.CreateSimpleButton("btnDR", "▽");
-  buttonBOTTOMROT.top = "-50px";
-  buttonBOTTOMROT.left = "250px";
-  buttonBOTTOMROT.width = "45px";
-  buttonBOTTOMROT.height = "45px";
-  buttonBOTTOMROT.color = "white";
-  buttonBOTTOMROT.background = "blue";
-  buttonBOTTOMROT.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-  buttonBOTTOMROT.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
-  buttonBOTTOMROT.onPointerDownObservable.add( () => 
-  {
-    OnDirectionButtonPointerDown( "BOTTOMROT" );
-  });
-  buttonBOTTOMROT.onPointerUpObservable.add( () => 
-  {
-    OnDirectionButtonPointerUp( "BOTTOMROT" );
-  });
-  var buttonLEFTROT = GUI.Button.CreateSimpleButton("btnLR", "<");
-  buttonLEFTROT.top = "-100px";
-  buttonLEFTROT.left = "200px";
-  buttonLEFTROT.width = "45px";
-  buttonLEFTROT.height = "45px";
-  buttonLEFTROT.color = "white";
-  buttonLEFTROT.background = "blue";
-  buttonLEFTROT.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-  buttonLEFTROT.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
-  buttonLEFTROT.onPointerDownObservable.add( () => 
-  {
-    OnDirectionButtonPointerDown( "LEFTROT" );   
-  });
-  buttonLEFTROT.onPointerUpObservable.add( () => 
-  {
-    OnDirectionButtonPointerUp( "LEFTROT" );
-  });
-  var buttonRIGHTROT = GUI.Button.CreateSimpleButton("btnRR", ">");
-  buttonRIGHTROT.top = "-100px";
-  buttonRIGHTROT.left = "300px";
-  buttonRIGHTROT.width = "45px";
-  buttonRIGHTROT.height = "45px";
-  buttonRIGHTROT.color = "white";
-  buttonRIGHTROT.background = "blue";
-  buttonRIGHTROT.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-  buttonRIGHTROT.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
-  buttonRIGHTROT.onPointerDownObservable.add( () => 
-  {
-    OnDirectionButtonPointerDown( "RIGHTROT" ); 
-  });
-  buttonRIGHTROT.onPointerUpObservable.add( () => 
-  {
-    OnDirectionButtonPointerUp( "RIGHTROT" );
-  });
-
-
-
-
-  var buttonCENTER = GUI.Button.CreateSimpleButton("btnC", "〇");
-  buttonCENTER.top = "-100px";
-  buttonCENTER.left = "100px";
-  buttonCENTER.width = "45px";
-  buttonCENTER.height = "45px";
-  buttonCENTER.color = "white";
-  buttonCENTER.background = "green";
-  buttonCENTER.horizontalAlignment = GUI.Control.HORIZONTAL_ALIGNMENT_LEFT;
-  buttonCENTER.verticalAlignment = GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
-  buttonCENTER.onPointerDownObservable.add( () => 
-  {
-    console.log( "center click" ); 
-    camera.position = new Vector3( 0, 1, -3 );
-    camera.rotation = new Vector3( 0, 0, 0 );
-    // console.log( camera.position );
-  });
-
-  advancedTextureButton.addControl( buttonTOP );
-  advancedTextureButton.addControl( buttonBOTTOM );
-  advancedTextureButton.addControl( buttonLEFT );
-  advancedTextureButton.addControl( buttonRIGHT );
-  advancedTextureButton.addControl( buttonFRONT );
-  advancedTextureButton.addControl( buttonBACK );
-  advancedTextureButton.addControl( buttonCENTER );
-
-  advancedTextureButton.addControl( buttonTOPROT );
-  advancedTextureButton.addControl( buttonBOTTOMROT );
-  advancedTextureButton.addControl( buttonLEFTROT );
-  advancedTextureButton.addControl( buttonRIGHTROT );
-
-  // ScreenUI/Image
-  // var img = new GUI.Image( "window", "/assets/window.png" );
-  // windowImg = new GUI.Image( "window", "https://raw.githubusercontent.com/amaebi-dm/babylonjs_work/refs/heads/main/resources/window.png" );
-  // windowImg.width = 0.5;
-  // windowImg.height = 0.5;
-  
-  
-
-
-
   // Pod/SPZ.
-  // ここで読み込んでる
-  var pod = await loadAssetContainerAsync( "https://vxv.co.jp/bizb/wp-content/uploads/temporary/pod.spz" ,scene);
-  // var pod = await loadAssetContainerAsync( "https://vxvcojp.xsrv.jp/sandbox/p/p0168_3dgs/light.spz" ,scene);
-  var podM = pod.meshes[0];
-  podM.name = "Pod_SPZ_MESH";
-  podM.position.x = 0;
-  podM.position.y = 1.5;
+  // var podM = await LoadPodSampleSpz( scene );
+  var podM = await LoadHouseSampleSpz( scene );
+  if( podM != null )
+  {
+    var current = podM.position;
+    current.x = 0;
+    current.y = 1.5;
+    podM.position = current;
+  }
+  
+  // Chair/Ply
+  // var a = await LoadChairSampelPly( scene );
+  
 
-  // var podUiPlane =  MeshBuilder.CreatePlane("podUiPlane", { width: 0.5, height: 0.5 });
-  // podUiPlane.parent = podM;
-  // podUiPlane.position.y = 0.2;
-  // podUiPlane.billboardMode = Mesh.BILLBOARDMODE_ALL;
-
-  // var podAdvancedTexture = GUI.AdvancedDynamicTexture.CreateForMesh( podUiPlane );
-
-  // var podTxt = new GUI.TextBlock();
-  // podTxt.text = "POD";
-  // podTxt.color = "white";
-  // podTxt.fontSize = 220;
-  // podAdvancedTexture.addControl( podTxt );
-
-
-
-  // // Chair/Ply
-  // // SceneLoader.ImportMeshAsync(null, "", "https://vxv.co.jp/bizb/wp-content/uploads/temporary/chair.ply", scene)
-  // SceneLoader.ImportMeshAsync(null, "", "https://raw.githubusercontent.com/amaebi-dm/babylonjs_work/refs/heads/main/resources/chair.ply", scene)
-  // // SceneLoader.ImportMeshAsync(null, "", "/assets/chair.ply", scene)
-  // .then((result) => 
-  // {
-  //     var mesh = result.meshes[0];
-  //     mesh.position.y = 1;
-  //     mesh.name = "Chair_PLY_MESH";
-
-  //     // mesh.material.pointSize = 1.5;
-  //     // 向きと位置を修正
-  //     // const center = Mesh.Center( result .meshes );
-  //     // mesh.rotateAround(center, new Vector3(1, 0, 0), -Math.PI / 2);
-  //     // mesh.position.subtractInPlace(center);
-  //     // window.alert( "Mesh Load Comp..." );
-
-      
-  //     var chairUiPlane =  MeshBuilder.CreatePlane("chairUiPlane", { width: 0.5, height: 0.5 });
-  //     chairUiPlane.parent = mesh;
-  //     chairUiPlane.position.y = 0.1;
-  //     chairUiPlane.billboardMode = Mesh.BILLBOARDMODE_ALL;
-
-  //     var chairAdvancedTexture = GUI.AdvancedDynamicTexture.CreateForMesh( chairUiPlane );
-
-  //     var chairTxt = new GUI.TextBlock();
-  //     chairTxt.text = "CHAIR";
-  //     chairTxt.color = "white";
-  //     chairTxt.fontSize = 220;
-  //     chairAdvancedTexture.addControl( chairTxt );
-
-  // });
+  var advancedTextureForLogo = GUI.AdvancedDynamicTexture.CreateFullscreenUI("LogoCanvas");
+  AddImage( "https://vxvcojp.xsrv.jp/sandbox/p/p0168_3dgs/resources/IMG_1289.webp", new Vector2( 250, 250 ), advancedTextureForLogo, GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT, GUI.Control.VERTICAL_ALIGNMENT_BOTTOM, window );
 
 
 
@@ -675,6 +307,24 @@ const main = async () =>
   // }
 
   // createHtmlMeshInstances(scene);
+
+
+
+
+
+  
+  // resize.
+  window.addEventListener( "resize", () => 
+    { 
+      engine.resize() 
+      GuiUtilResize( window );
+    } );
+  //update.
+  engine.runRenderLoop( () => 
+    { 
+      scene.render();
+      // OnCameraUpdate( camera );
+    });
   
   
 };
@@ -687,69 +337,6 @@ main();
 
 
 // function.
-
-var isMoving : Boolean = false;
-var currentSelectedButton : string = "NONE";
-function AddPosition( key : String, camera : UniversalCamera )
-{
-  var x = 0;
-  var y = 0;
-  var z = 0;
-  var xRot = 0;
-  var yRot = 0;
-  var zRot = 0;
-  switch( key )
-  {
-    case "TOP": { x = 0; y = 0.01; break; } 
-    case "BOTTOM": { x = 0; y = -0.01; break; } 
-    case "LEFT": { x = -0.01; y = 0; break; } 
-    case "RIGHT": { x = 0.01; y = 0; break; } 
-    case "FRONT": { z = 0.01; break; } 
-    case "BACK": { z = -0.01; break; } 
-
-    case "TOPROT": { xRot = -0.01; break; } 
-    case "BOTTOMROT": { xRot = 0.01; break; } 
-    case "LEFTROT": { yRot = -0.01; break; } 
-    case "RIGHTROT": { yRot = 0.01; break; } 
-  }
-
-  var current = camera.position;
-  current.x += x;
-  current.y += y;
-  current.z += z;
-  camera.position = current;
-
-  
-
-  var currentRot = camera.rotation;
-  currentRot.x += xRot;
-  currentRot.y += yRot;
-  currentRot.z += zRot;
-  camera.rotation = currentRot;
-} 
-
-function OnCameraUpdate( camera : UniversalCamera )
-{
-  if( isMoving == true && currentSelectedButton != "NONE" )
-  {
-    AddPosition( currentSelectedButton, camera );
-  }
-}
-
-function OnDirectionButtonPointerDown( key : string )
-{
-  isMoving = true;
-  currentSelectedButton = key;
-
-  console.log( key + "のボタンクリック開始." );
-}
-function OnDirectionButtonPointerUp( key : string )
-{
-  isMoving = false;
-  currentSelectedButton = "NONE";
-
-  console.log( key + "のボタンクリック終了." );
-}
 
 
 
@@ -872,7 +459,7 @@ function OnDirectionButtonPointerUp( key : string )
 
 
 
-//   var anim = scene.beginAnimation( targetCamera, 0, 50, false, 2 );
+  // var anim = scene.beginAnimation( targetCamera, 0, 50, false, 2 );
 
 
 //   // アニメーション待機.
