@@ -51,8 +51,6 @@ export function AddImage( url : string, size : Vector2, advTex : GUI.AdvancedDyn
 
   var img = new GUI.Image( "logo", url );
   
-  // var w = size.x.toString() + "px";
-  // var h = size.y.toString() + "px";
   img.widthInPixels = size.x;
   img.heightInPixels = size.y;
 

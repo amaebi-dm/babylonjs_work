@@ -87,66 +87,66 @@ import
 
 
 
-// const createHtmlMeshInstances = ( scene : Scene ) => 
-// {
-//   // var windowKey : String;
-//   // var htmlMeshPackage : Window;
-//   for (const [key, value] of Object.entries(window)) 
-//   {
-//     if ( key == "babylon-htmlmesh" ) console.log( value );
-//     else console.log( "-----" );
-//   }
-//   const htmlMeshPackage = window[ "babylon-htmlmesh" ];
-//   const HtmlMesh = htmlMeshPackage.HtmlMesh;
-//   const HtmlMeshRenderer = htmlMeshPackage.HtmlMeshRenderer;
+const createHtmlMeshInstances = ( scene : Scene ) => 
+{
+  // var windowKey : String;
+  // var htmlMeshPackage : Window;
+  var htmlMeshPackage : any;
+  for (const [key, value] of Object.entries(window)) 
+  {
+    if ( key == "babylon-htmlmesh" ) htmlMeshPackage = value;
+    else console.log( "-----" );
+  }
+  // const htmlMeshPackage = window[ "babylon-htmlmesh" ];
+  const HtmlMesh = htmlMeshPackage.HtmlMesh;
+  const HtmlMeshRenderer = htmlMeshPackage.HtmlMeshRenderer;
+  // Create the HtmlMeshRenderer
+  new HtmlMeshRenderer(scene);
 
-//   // Create the HtmlMeshRenderer
-//   const htmlMeshRenderer = new HtmlMeshRenderer(scene);
-
-//   // Shows how this can be used to include html content, such
-//   // as a form, in your scene.  This can be used to create
-//   // richer UIs than can be created with the standard Babylon
-//   // UI control, albeit with the restriction that such UIs would
-//   // not display in native mobile apps or XR applications.
-//   const htmlMeshDiv = new HtmlMesh(scene, "html-mesh-div");
-//   const div = document.createElement('div');
-//   div.innerHTML = `
-//       <form style="padding: 10px; transform-origin: 0 0; scale: 4">
-//           <label for="name">Name:</label>
-//           <input type="text" id="name" name="name" required><br><br>
+  // // Shows how this can be used to include html content, such
+  // // as a form, in your scene.  This can be used to create
+  // // richer UIs than can be created with the standard Babylon
+  // // UI control, albeit with the restriction that such UIs would
+  // // not display in native mobile apps or XR applications.
+  // const htmlMeshDiv = new HtmlMesh(scene, "html-mesh-div");
+  // const div = document.createElement('div');
+  // div.innerHTML = `
+  //     <form style="padding: 10px; transform-origin: 0 0; scale: 4">
+  //         <label for="name">Name:</label>
+  //         <input type="text" id="name" name="name" required><br><br>
           
-//           <label for="country">Country:</label>
-//           <select id="country" name="country">
-//               <option value="USA">USA</option>
-//               <option value="Canada">Canada</option>
-//               <option value="UK">UK</option>
-//               <option value="Australia">Australia</option>
-//           </select><br><br>
+  //         <label for="country">Country:</label>
+  //         <select id="country" name="country">
+  //             <option value="USA">USA</option>
+  //             <option value="Canada">Canada</option>
+  //             <option value="UK">UK</option>
+  //             <option value="Australia">Australia</option>
+  //         </select><br><br>
           
-//           <label for="hobbies">Hobbies:</label><br>
-//           <input type="checkbox" id="hobby1" name="hobbies" value="Reading">
-//           <label for="hobby1">Reading</label><br>
-//           <input type="checkbox" id="hobby2" name="hobbies" value="Gaming">
-//           <label for="hobby2">Gaming</label><br>
-//           <input type="checkbox" id="hobby3" name="hobbies" value="Sports">
-//           <label for="hobby3">Sports</label><br><br>
-//       </form>
-//   `;
-//   div.style.backgroundColor = 'white';
-//   div.style.width = '480px';
-//   div.style.height = '360px';
-//   // Style the form
+  //         <label for="hobbies">Hobbies:</label><br>
+  //         <input type="checkbox" id="hobby1" name="hobbies" value="Reading">
+  //         <label for="hobby1">Reading</label><br>
+  //         <input type="checkbox" id="hobby2" name="hobbies" value="Gaming">
+  //         <label for="hobby2">Gaming</label><br>
+  //         <input type="checkbox" id="hobby3" name="hobbies" value="Sports">
+  //         <label for="hobby3">Sports</label><br><br>
+  //     </form>
+  // `;
+  // div.style.backgroundColor = 'white';
+  // div.style.width = '480px';
+  // div.style.height = '360px';
+  // // Style the form
   
-//   htmlMeshDiv.setContent(div, 4, 3);
-//   htmlMeshDiv.position.x = -3;
-//   htmlMeshDiv.position.y = 2;
+  // htmlMeshDiv.setContent(div, 4, 3);
+  // htmlMeshDiv.position.x = -3;
+  // htmlMeshDiv.position.y = 2;
 
-  // Shows how this can be used to include a PDF in your scene.  Note this is 
-  // conceptual only.  Displaying a PDF like this works, but any links in the
-  // PDF will navigate the current tab, which is probably not what you want.
-  // There are other solutions out there such as PDF.js that may give you more
-  // control, but ultimately proper display of PDFs is not within the scope of
-  // this project.
+  // // Shows how this can be used to include a PDF in your scene.  Note this is 
+  // // conceptual only.  Displaying a PDF like this works, but any links in the
+  // // PDF will navigate the current tab, which is probably not what you want.
+  // // There are other solutions out there such as PDF.js that may give you more
+  // // control, but ultimately proper display of PDFs is not within the scope of
+  // // this project.
   // const pdfUrl = 'https://cdn.glitch.com/3da1885b-3463-4252-8ded-723332b5de34%2FNew_Horizons.pdf#zoom=75?v=1599831745689'
   // const htmlMeshPdf = new HtmlMesh(scene, "html-mesh-pdf");
   // const iframePdf = document.createElement('iframe');
@@ -157,19 +157,19 @@ import
   // htmlMeshPdf.position.x = 3;
   // htmlMeshPdf.position.y = 2;
 
-  // Shows how this can be used to include a website in your scene
-  // const siteUrl = 'https://www.babylonjs.com/';
-  // const htmlMeshSite = new HtmlMesh(scene, "html-mesh-site");
-  // const iframeSite = document.createElement('iframe');
-  // iframeSite.src = siteUrl;
-  // iframeSite.width = '480px';
-  // iframeSite.height = '360px';
-  // htmlMeshSite.setContent(iframeSite, 4, 3);
-  // htmlMeshSite.position.x = -3;
-  // htmlMeshSite.position.y = -2;
-  // htmlMeshSite.rotation.y = Math.PI / 4;
+  // // Shows how this can be used to include a website in your scene
+  const siteUrl = 'https://www.babylonjs.com/';
+  const htmlMeshSite = new HtmlMesh(scene, "html-mesh-site");
+  const iframeSite = document.createElement('iframe');
+  iframeSite.src = siteUrl;
+  iframeSite.width = '500px';
+  iframeSite.height = '500px';
+  htmlMeshSite.setContent(iframeSite, 4, 3);
+  htmlMeshSite.position.x = -3;
+  htmlMeshSite.position.y = -2;
+  htmlMeshSite.rotation.y = Math.PI / 4;
   
-  // Shows how this can be used to include a YouTube video in your scene
+  // // Shows how this can be used to include a YouTube video in your scene
   // const videoId = 'zELYw2qEUjI';
   // const videoUrl = [ 'https://www.youtube.com/embed/', videoId, '?rel=0&enablejsapi=1&disablekb=1&controls=0&fs=0&modestbranding=1' ].join( '' );
   // const htmlMeshVideo = new HtmlMesh(scene, "html-mesh-video");
@@ -182,32 +182,36 @@ import
   // htmlMeshVideo.position.y = -2;
 
   // Shows how to create an HTML Overlay
-//   const overlayMesh = new HtmlMesh(scene, "html-overlay-mesh", { isCanvasOverlay: true });
-//   const overlayMeshDiv = document.createElement('div');
-//   overlayMeshDiv.innerHTML = `<p style="padding: 60px; font-size: 80px;">This is an overlay. It is positioned in front of the canvas. This allows it to have transparency and to be non-rectangular, but it will always show over any other content in the scene</p>`;
-//   overlayMeshDiv.style.backgroundColor = 'rgba(0,255,0,0.49)';
-//   overlayMeshDiv.style.width = '120px';
-//   overlayMeshDiv.style.height = '90px';
-//   overlayMeshDiv.style.display = 'flex';
-//   overlayMeshDiv.style.alignItems = 'center';
-//   overlayMeshDiv.style.justifyContent = 'center';
-//   overlayMeshDiv.style.borderRadius = '20px';
-//   overlayMeshDiv.style.fontSize = 'xx-small';
-//   overlayMeshDiv.style.padding = '10px';
-//   // Style the form
+  // const overlayMesh = new HtmlMesh(scene, "html-overlay-mesh", { isCanvasOverlay: true });
+  // const overlayMeshDiv = document.createElement('div');
+  // overlayMeshDiv.innerHTML = 
+  // `<p style="padding: 60px; font-size: 80px;">
+  //   This is an overlay. It is positioned in front of the canvas. This allows it to have transparency and to be non-rectangular, 
+  //   but it will always show over any other content in the scene
+  // </p>
+  // <img class="img" src="https://vxvcojp.xsrv.jp/sandbox/p/p0168_3dgs/resources/IMG_1289.webp" alt="img" />`;
+  // overlayMeshDiv.style.backgroundColor = 'rgba(255,255,255,0.2)';
+  // overlayMeshDiv.style.width = '120px';
+  // overlayMeshDiv.style.height = '90px';
+  // overlayMeshDiv.style.display = 'flex';
+  // overlayMeshDiv.style.alignItems = 'center';
+  // overlayMeshDiv.style.justifyContent = 'center';
+  // overlayMeshDiv.style.borderRadius = '20px';
+  // overlayMeshDiv.style.fontSize = 'xx-small';
+  // overlayMeshDiv.style.padding = '10px';
+  // // Style the form
+  // overlayMesh.setContent(overlayMeshDiv, 4, 3);
+  // overlayMesh.position.z = 5;
+}
 
-//   overlayMesh.setContent(overlayMeshDiv, 4, 3);
-//   overlayMesh.position.z = 5;
-// }
 
 
 
-
-// const url = "https://cdn.jsdelivr.net/npm/babylon-htmlmesh/dist/umd/babylon-htmlmesh.min.js";
-// const htmlMeshScript = document.createElement("script");
-// htmlMeshScript.type = "module";
-// htmlMeshScript.src = url;
-// document.body.appendChild(htmlMeshScript);
+const url = "https://cdn.jsdelivr.net/npm/babylon-htmlmesh/dist/umd/babylon-htmlmesh.min.js";
+const htmlMeshScript = document.createElement("script");
+htmlMeshScript.type = "module";
+htmlMeshScript.src = url;
+document.body.appendChild(htmlMeshScript);
 
 
 
@@ -301,48 +305,14 @@ const main = async () =>
   AddImage( "https://vxvcojp.xsrv.jp/sandbox/p/p0168_3dgs/resources/IMG_1289.webp", new Vector2( 150, 150 ), advancedTextureForLogo, null, null, window );
 
 
-  // var advancedTextureForText = GUI.AdvancedDynamicTexture.CreateFullscreenUI("TextCanvas");
-  // var txt = new GUI.TextBlock( "txt", "AAAAA" );
-  // txt.color = "white";
-  // txt.fontSize = 50;
-  // var width = window.innerWidth;//window.screen.width;
-  // var height = window.innerHeight;//window.screen.height;
-  // var img = res[ 0 ];
-  // var size = res[ 1 ];
-  // var ratioW = size.x / window.innerWidth;
-  // var ratioH = size.y / window.innerHeight;
-  // var side = "";
-  // if( ratioW < ratioH )
+
+  // htmlMeshScript.onload = (event) => 
   // {
-  //   var h = ( height / 8 );
-  //   img.height = h.toString() + "px";
-  //   var w = h * ( size.x / size.y );
-  //   img.width = w.toString() + "px";
-  //   side = "縦にあわせる";
-  // }
-  // else
-  // {
-  //   var w = ( width / 8 );
-  //   img.width = w.toString() + "px";
-  //   var h = w * ( size.y / size.x );
-  //   img.height = h.toString() + "px";
-  //   side = "横にあわせる";
-  // }
-  // // img.left = ( width / 2 ) - ( size.x / 2 );
-  // // img.top = ( height / 2 ) - ( size.y / 2 );
-
-  // txt.text = "( " + img.widthInPixels.toString() + ", " + img.heightInPixels.toString() + " ) ";
-  // // img.width = ( width / 10 ).toString() + "px";
-  // // img.height = ( height / 10 ).toString() + "px";
-  // advancedTextureForText.addControl( txt );
-
-
-  // htmlMeshScript.onload = (event) => {
   //   console.log("babylon-htmlmesh loaded");
   //   createHtmlMeshInstances(scene);
   // }
 
-  // createHtmlMeshInstances(scene);
+  createHtmlMeshInstances(scene);
 
 
 
