@@ -51,10 +51,10 @@ export function AddImage( url : string, size : Vector2, advTex : GUI.AdvancedDyn
 
   var img = new GUI.Image( "logo", url );
   
-  var w = size.x.toString() + "px";
-  var h = size.y.toString() + "px";
-  img.width = w;
-  img.height = h;
+  // var w = size.x.toString() + "px";
+  // var h = size.y.toString() + "px";
+  img.widthInPixels = size.x;
+  img.heightInPixels = size.y;
 
   if( resazable == true ) ResizeImages.push( [ img, size ] );
   
@@ -90,18 +90,20 @@ function Resize( window : Window )
       img.heightInPixels = setHeight;
       setWidth = setHeight * ( defX / defY );
       img.widthInPixels = setWidth;
-      console.log( "縦にあわせる // " + setWidth + " / " + setHeight );
+      // side = "縦にあわせる";
     }
     else
     {
       setWidth = ( width / 5 );
-      img.width = setWidth;
+      img.widthInPixels = setWidth;
       setHeight = setWidth * ( defY / defX );
-      img.height = setHeight;
-      console.log( "横にあわせる // " + setWidth + " / " + setHeight );
+      img.heightInPixels = setHeight;
+      // side = "横にあわせる";
     }
     img.left = ( width / 2 ) - ( img.widthInPixels / 2 );
     img.top = ( height / 2 ) - ( img.heightInPixels / 2 );
+
+    // console.log( side + " // " + img.widthInPixels + ", " + img.heightInPixels + " :: " + setWidth + ", " + setHeight );
   }
 }
 
