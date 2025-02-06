@@ -328,6 +328,9 @@ const main = async () =>
     img.height = h.toString() + "px";
     side = "横にあわせる";
   }
+  img.left = ( width / 2 ) - ( size.x / 2 );
+  img.top = ( height / 2 ) - ( size.y / 2 );
+
   txt.text = "( " + width.toString() + ", " + height.toString() + " ) " + side;
   // img.width = ( width / 10 ).toString() + "px";
   // img.height = ( height / 10 ).toString() + "px";
