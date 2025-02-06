@@ -45,7 +45,7 @@ export function GuiUtilResize( window : Window )
 
 //
 
-export function AddImage( url : string, size : Vector2, advTex : GUI.AdvancedDynamicTexture, horizontalAlignment : number | null = null, verticalAlignment : number | null = null, window : Window | null = null, resazable : Boolean = true )
+export function AddImage( url : string, size : Vector2, advTex : GUI.AdvancedDynamicTexture, horizontalAlignment : number | null = null, verticalAlignment : number | null = null, window : Window | null = null, resazable : Boolean = true ) : [ image : GUI.Image, size : Vector2 ]
 {
   // https://vxvcojp.xsrv.jp/sandbox/p/p0168_3dgs/resources/IMG_1289.webp
 
@@ -63,6 +63,8 @@ export function AddImage( url : string, size : Vector2, advTex : GUI.AdvancedDyn
 
   advTex.addControl( img );
   if( window != null ) Resize( window );
+
+  return [ img, size ];
 }
 
 

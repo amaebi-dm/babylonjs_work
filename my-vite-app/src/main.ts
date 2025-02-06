@@ -298,7 +298,7 @@ const main = async () =>
   
 
   var advancedTextureForLogo = GUI.AdvancedDynamicTexture.CreateFullscreenUI("LogoCanvas");
-  AddImage( "https://vxvcojp.xsrv.jp/sandbox/p/p0168_3dgs/resources/IMG_1289.webp", new Vector2( 150, 150 ), advancedTextureForLogo, GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT, GUI.Control.VERTICAL_ALIGNMENT_BOTTOM, null );
+  var res = AddImage( "https://vxvcojp.xsrv.jp/sandbox/p/p0168_3dgs/resources/IMG_1289.webp", new Vector2( 150, 150 ), advancedTextureForLogo );
 
 
   var advancedTextureForText = GUI.AdvancedDynamicTexture.CreateFullscreenUI("TextCanvas");
@@ -307,7 +307,30 @@ const main = async () =>
   txt.fontSize = 50;
   var width = window.innerWidth;//window.screen.width;
   var height = window.innerHeight;//window.screen.height;
-  txt.text = "( " + width.toString() + ", " + height.toString() + " )";
+  var img = res[ 0 ];
+  var size = res[ 1 ];
+  var ratioW = size.x / window.innerWidth;
+  var ratioH = size.y / window.innerHeight;
+  var side = "";
+  if( ratioW < ratioH )
+  {
+    var h = ( height / 10 );
+    img.height = h.toString() + "px";
+    var w = h * ( size.x / size.y );
+    img.width = w.toString() + "px";
+    side = "縦にあわせる";
+  }
+  else
+  {
+    var w = ( width / 10 );
+    img.width = w.toString() + "px";
+    var h = w * ( size.y / size.x );
+    img.height = h.toString() + "px";
+    side = "横にあわせる";
+  }
+  txt.text = "( " + width.toString() + ", " + height.toString() + " ) " + side;
+  // img.width = ( width / 10 ).toString() + "px";
+  // img.height = ( height / 10 ).toString() + "px";
   advancedTextureForText.addControl( txt );
 
 
