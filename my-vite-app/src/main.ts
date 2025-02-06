@@ -66,8 +66,8 @@ import
 import 
 { 
   // LoadChairSampelPly, 
-  // LoadPodSampleSpz, 
-  LoadHouseSampleSpz 
+  LoadPodSampleSpz
+  // LoadHouseSampleSpz 
 } from "./modelLoader";
 import 
 { 
@@ -79,6 +79,9 @@ import
   GuiUtilResize, 
   AddImage 
 } from "./guiUtil";
+
+
+
 
 
 
@@ -214,14 +217,13 @@ import
 
 // type PostiionType = "Box" | "Chair" | "Pod" | "Sphere" | "All" ;
 
-
 const main = async () => 
 {
   const renderCanvas =
     document.querySelector<HTMLCanvasElement>("#renderCanvas");
   if (!renderCanvas) {
     return;
-  }
+  };
 
   const engine = new Engine(renderCanvas);
   const scene = new Scene(engine);
@@ -281,8 +283,8 @@ const main = async () =>
   // CreateMovingButtons( advancedTextureButton, camera );
   
   // Pod/SPZ.
-  // var podM = await LoadPodSampleSpz( scene );
-  var podM = await LoadHouseSampleSpz( scene );
+  var podM = await LoadPodSampleSpz( scene );
+  // var podM = await LoadHouseSampleSpz( scene );
   if( podM != null )
   {
     var current = podM.position;
@@ -299,6 +301,14 @@ const main = async () =>
   AddImage( "https://vxvcojp.xsrv.jp/sandbox/p/p0168_3dgs/resources/IMG_1289.webp", new Vector2( 150, 150 ), advancedTextureForLogo, GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT, GUI.Control.VERTICAL_ALIGNMENT_BOTTOM, null );
 
 
+  var advancedTextureForText = GUI.AdvancedDynamicTexture.CreateFullscreenUI("TextCanvas");
+  var txt = new GUI.TextBlock( "txt", "AAAAA" );
+  txt.color = "white";
+  txt.fontSize = 50;
+  var width = window.innerWidth;//window.screen.width;
+  var height = window.innerHeight;//window.screen.height;
+  txt.text = "( " + width.toString() + ", " + height.toString() + " )";
+  advancedTextureForText.addControl( txt );
 
 
   // htmlMeshScript.onload = (event) => {
