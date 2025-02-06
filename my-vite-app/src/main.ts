@@ -298,40 +298,40 @@ const main = async () =>
   
 
   var advancedTextureForLogo = GUI.AdvancedDynamicTexture.CreateFullscreenUI("LogoCanvas");
-  var res = AddImage( "https://vxvcojp.xsrv.jp/sandbox/p/p0168_3dgs/resources/IMG_1289.webp", new Vector2( 150, 150 ), advancedTextureForLogo );
+  var res = AddImage( "https://vxvcojp.xsrv.jp/sandbox/p/p0168_3dgs/resources/IMG_1289.webp", new Vector2( 150, 150 ), advancedTextureForLogo, null, null, window );
 
 
   var advancedTextureForText = GUI.AdvancedDynamicTexture.CreateFullscreenUI("TextCanvas");
   var txt = new GUI.TextBlock( "txt", "AAAAA" );
   txt.color = "white";
   txt.fontSize = 50;
-  var width = window.innerWidth;//window.screen.width;
-  var height = window.innerHeight;//window.screen.height;
-  var img = res[ 0 ];
-  var size = res[ 1 ];
-  var ratioW = size.x / window.innerWidth;
-  var ratioH = size.y / window.innerHeight;
-  var side = "";
-  if( ratioW < ratioH )
-  {
-    var h = ( height / 10 );
-    img.height = h.toString() + "px";
-    var w = h * ( size.x / size.y );
-    img.width = w.toString() + "px";
-    side = "縦にあわせる";
-  }
-  else
-  {
-    var w = ( width / 10 );
-    img.width = w.toString() + "px";
-    var h = w * ( size.y / size.x );
-    img.height = h.toString() + "px";
-    side = "横にあわせる";
-  }
-  img.left = ( width / 2 ) - ( size.x / 2 );
-  img.top = ( height / 2 ) - ( size.y / 2 );
+  // var width = window.innerWidth;//window.screen.width;
+  // var height = window.innerHeight;//window.screen.height;
+  // var img = res[ 0 ];
+  // var size = res[ 1 ];
+  // var ratioW = size.x / window.innerWidth;
+  // var ratioH = size.y / window.innerHeight;
+  // var side = "";
+  // if( ratioW < ratioH )
+  // {
+  //   var h = ( height / 8 );
+  //   img.height = h.toString() + "px";
+  //   var w = h * ( size.x / size.y );
+  //   img.width = w.toString() + "px";
+  //   side = "縦にあわせる";
+  // }
+  // else
+  // {
+  //   var w = ( width / 8 );
+  //   img.width = w.toString() + "px";
+  //   var h = w * ( size.y / size.x );
+  //   img.height = h.toString() + "px";
+  //   side = "横にあわせる";
+  // }
+  // img.left = ( width / 2 ) - ( size.x / 2 );
+  // img.top = ( height / 2 ) - ( size.y / 2 );
 
-  txt.text = "( " + width.toString() + ", " + height.toString() + " ) " + side;
+  txt.text = "( " + res[ 1 ].x.toString() + ", " + res[ 1 ].y.toString() + " ) ";
   // img.width = ( width / 10 ).toString() + "px";
   // img.height = ( height / 10 ).toString() + "px";
   advancedTextureForText.addControl( txt );

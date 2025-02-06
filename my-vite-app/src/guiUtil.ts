@@ -31,7 +31,7 @@ import * as GUI from "@babylonjs/gui";
 import "@babylonjs/loaders/SPLAT";
 
 
-export var ResizeImages : [ image : GUI.Image, defaultWidthInPixel : string, defaultHeightInPixel : string ][] = [];
+export var ResizeImages : [ image : GUI.Image, defaulSize : Vector2 ][] = [];
 
 
 
@@ -56,7 +56,7 @@ export function AddImage( url : string, size : Vector2, advTex : GUI.AdvancedDyn
   img.width = w;
   img.height = h;
 
-  if( resazable == true ) ResizeImages.push( [ img, w, h ] );
+  if( resazable == true ) ResizeImages.push( [ img, size ] );
   
   if( horizontalAlignment != null ) img.horizontalAlignment = horizontalAlignment;  //GUI.Control.HORIZONTAL_ALIGNMENT_RIGHT;
   if( verticalAlignment != null ) img.verticalAlignment = verticalAlignment; //GUI.Control.VERTICAL_ALIGNMENT_BOTTOM;
@@ -75,50 +75,33 @@ function Resize( window : Window )
   for( const tpl of ResizeImages )
   {
     var img = tpl[ 0 ];
-    var defW = tpl[ 1 ];
-    var defH = tpl[ 2 ];
-    if( img.widthInPixels == 0 || img.heightInPixels == 0 )
+    var defX = tpl[ 1 ].x;
+    var defY = tpl[ 1 ].y;
+    var width = window.innerWidth;//window.screen.width;
+    var height = window.innerHeight;//window.screen.height;
+    var ratioW = defX / window.innerWidth;
+    var ratioH = defY / window.innerHeight;
+    // var side = "";
+    var setWidth = 0;
+    var setHeight = 0;
+    if( ratioW < ratioH )
     {
-      console.log( "画像をピクセル数のサイズを設定してください." );
-      continue;
-    }
-
-    var imgRatio = img.widthInPixels / img.heightInPixels;
-    var resizeWidth = img.widthInPixels;
-    var resizeHeight = img.heightInPixels;
-    var resizeRatioWidth = 1;
-    var resizeRatioHeight = 1;
-    var overWidth = ( window.innerWidth / 10 < img.widthInPixels );
-    var overHeight = ( window.innerHeight / 10 < img.heightInPixels );
-
-    if( overWidth == true || overHeight == true )
-    {
-      resizeWidth = window.innerWidth / 10;
-      resizeHeight = window.innerHeight / 10;
-
-      resizeRatioWidth = resizeWidth / img.widthInPixels;
-      resizeRatioHeight = resizeHeight / img.heightInPixels;
-
-      if( resizeRatioWidth >= resizeRatioHeight )
-      {
-        var imgRatio = img.widthInPixels / img.heightInPixels;
-        resizeWidth = resizeHeight * imgRatio;
-      }
-      else
-      {
-        var imgRatio = img.heightInPixels / img.widthInPixels;
-        resizeHeight = resizeWidth * imgRatio;
-      }
-
-      img.width = resizeWidth.toString() + "px";
-      img.height = resizeHeight.toString() + "px";
+      setHeight = ( height / 5 );
+      img.heightInPixels = setHeight;
+      setWidth = setHeight * ( defX / defY );
+      img.widthInPixels = setWidth;
+      console.log( "縦にあわせる // " + setWidth + " / " + setHeight );
     }
     else
     {
-      // console.log( "resize なし" );
-      img.width = defW;
-      img.height = defH;
+      setWidth = ( width / 5 );
+      img.width = setWidth;
+      setHeight = setWidth * ( defY / defX );
+      img.height = setHeight;
+      console.log( "横にあわせる // " + setWidth + " / " + setHeight );
     }
+    img.left = ( width / 2 ) - ( img.widthInPixels / 2 );
+    img.top = ( height / 2 ) - ( img.heightInPixels / 2 );
   }
 }
 
