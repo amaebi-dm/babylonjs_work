@@ -33,10 +33,18 @@ import "@babylonjs/loaders/SPLAT";
 
   
 
+export var scene : Scene | null = null;
 
+export function SetScene( setScene : Scene, isForceUpdate : Boolean = false )
+{
+  if( isForceUpdate == false && scene != null ) return;
+
+  scene = setScene;
+}
 
 export function AddGizmo( scene : Scene ) 
 {
+  SetScene( scene );
   // Gizomo.
   var center = MeshBuilder.CreateBox( "center", { width: 0.05, height: 0.05, depth: 0.05 }, scene);
   var centerMat = new StandardMaterial( "centermat", scene );
@@ -56,6 +64,8 @@ export function AddGround( width : number, height : number )
 // テキストやボタンは一旦適当に.
 export function AddBox( name : string, size : Vector3, position : Vector3, color : Color3, scene : Scene, addMeshWord : Boolean = true ) : Mesh
 {
+  SetScene( scene );
+
   var meshName = ( addMeshWord == true ) ? name + "_MESH" : name;
   var box = MeshBuilder.CreateBox( meshName, { width: size.x, height: size.y, depth: size.z }, scene );
   box.position = position;
@@ -99,8 +109,10 @@ export function AddBox( name : string, size : Vector3, position : Vector3, color
   return box;
 }
 
-export function AddSphere( name : string, size : Vector2, position : Vector3, color : Color3, scene : Scene, pointerDownCall : ( () => void ) | null = null, addMeshWord : Boolean = true ) : Mesh
+export function AddSphere( name : string, size : Vector2, position : Vector3, color : Color3, scene : Scene, addMeshWord : Boolean = true ) : Mesh
 {
+  SetScene( scene );
+
   var meshName = ( addMeshWord == true ) ? name + "_MESH" : name;
   var sphere = MeshBuilder.CreateSphere( meshName, { segments: size.x, diameter: size.y }, scene );
   sphere.position = position;
@@ -138,56 +150,98 @@ export function AddSphere( name : string, size : Vector2, position : Vector3, co
   advancedTextureSphere.addControl( spButton );
   advancedTextureSphere.addControl( spTxt );
 
-  if( pointerDownCall != null )
-  {
-    scene.onPointerDown = function( evt, pickInfo )
-    {
-      let pickedMesh : string | undefined = "";
-      if( pickInfo.hit )
-      {
-        pickedMesh = pickInfo.pickedMesh?.name;
-      }
+  // if( pointerDownCall != null )
+  // {
+  //   scene.onPointerDown = function( evt, pickInfo )
+  //   {
+  //     let pickedMesh : string | undefined = "";
+  //     if( pickInfo.hit )
+  //     {
+  //       pickedMesh = pickInfo.pickedMesh?.name;
+  //     }
 
-      if( pickedMesh != null ) 
-      {      
-        // console.log( "sphere hit" );
-        // とりあえずヒットしたオブジェクトの名前で必要なモノを判断.
-        // if( pickedMesh.includes( "_MESH" ) )
-        // {
-          console.log( "mesh にヒット ( " + pickedMesh + " )" + evt );
-          pointerDownCall();
-        //   // onMeshHit( pickedMesh, camera, scene );
-        // }
-      }
-    }
-  }
+  //     if( pickedMesh != null ) 
+  //     {      
+  //       // console.log( "sphere hit" );
+  //       // とりあえずヒットしたオブジェクトの名前で必要なモノを判断.
+  //       // if( pickedMesh.includes( "_MESH" ) )
+  //       if( pickedMesh == meshName )
+  //       {
+  //         console.log( "mesh にヒット ( " + pickedMesh + " )" + evt );
+  //         var tpl = 
+  //         pointerDownCall();
+  //         // onMeshHit( pickedMesh, camera, scene );
+  //       }
+  //     }
+  //   }
+  // }
 
   return sphere;
 }
 
 
+// var callbackMeshes : string[] = [];
+// var callbacks : ( key : string, ( ( st : string ) => void  )) = [];
+class ClickCallBack
+{
+  key : string;
+  callback : ( st : string ) => void;
 
-// export function AddMeshHit( callback : ( st : string ) => void )
-// {
-//   callback( "sss" );
+  constructor( key : string, call : ( st : string ) => void )
+  {
+    this.key = key;
+    this.callback = call;
+  }
+}
+var callbacks : ClickCallBack[] = [];
 
-//   // メッシュヒット.
-//   scene.onPointerDown = function( evt, pickInfo )
-//   {
-//     let pickedMesh : string | undefined = "";
-//     if( pickInfo.hit )
-//     {
-//       pickedMesh = pickInfo.pickedMesh?.name;
-//     }
+export function AddMeshHit( name : string, callback : () => void, setScene : Scene | null = null )
+{
+  if( setScene != null ) SetScene( setScene );
+  else if( scene == null )
+  {
+    console.log( "Sceneをセットしてください." );
+    return;
+  }
 
-//     if( pickedMesh != null ) 
-//     {      
-//       // とりあえずヒットしたオブジェクトの名前で必要なモノを判断.
-//       if( pickedMesh.includes( "_MESH" ) )
-//       {
-//         console.log( "mesh にヒット ( " + pickedMesh + " )" + evt );
-//         // onMeshHit( pickedMesh, camera, scene );
-//       }
-//     }
-//   }
-// }
+  if( scene != null )
+  {
+    var ccb = new ClickCallBack( name, callback );
+    callbacks.push( ccb );
+    SetCallback( scene );
+  }
+}
+
+function SetCallback( setScene : Scene | null = null )
+{
+  if( setScene != null ) SetScene( setScene );
+
+  if( scene != null )
+  {
+    // メッシュヒット.
+    scene.onPointerDown = function( evt, pickInfo )
+    {
+      for( const call of callbacks )
+      {
+        let pickedMesh : string | undefined = "";
+        if( pickInfo.hit )
+        {
+          pickedMesh = pickInfo.pickedMesh?.name;
+        }
+
+        if( pickedMesh != null ) 
+        {      
+          // とりあえずヒットしたオブジェクトの名前で必要なモノを判断.
+          // if( pickedMesh.includes( "_MESH" ) )
+          if( pickedMesh == call.key )
+          {
+            console.log( "mesh にヒット ( " + pickedMesh + " )" + evt );
+            // onMeshHit( pickedMesh, camera, scene );
+            call.callback( pickedMesh );
+          }
+        }
+      }
+    }
+
+  }
+}

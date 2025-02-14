@@ -7,7 +7,7 @@ import
   // Mesh, 
   // loadAssetContainerAsync, 
   Scene, 
-  // Color3, 
+  Color3, 
   Color4, 
   Vector3, 
   Layer,
@@ -65,144 +65,30 @@ import
 } from "./moveButton";
 import 
 { 
-  // LoadChairSampelPly, 
+  LoadChairSampelPly, 
   LoadPodSampleSpz
   // LoadHouseSampleSpz 
 } from "./modelLoader";
 import 
 { 
-  // AddBox, 
-  // AddSphere 
+  AddBox, 
+  AddGround, 
+  AddSphere,
+  AddMeshHit
 } from "./meshCreater";
 import 
 { 
   GuiUtilResize, 
   AddImage 
 } from "./guiUtil";
-
-
-
-
-
-
-
-
-const createHtmlMeshInstances = ( scene : Scene ) => 
+import
 {
-  // var windowKey : String;
-  // var htmlMeshPackage : Window;
-  var htmlMeshPackage : any;
-  for (const [key, value] of Object.entries(window)) 
-  {
-    if ( key == "babylon-htmlmesh" ) htmlMeshPackage = value;
-    else console.log( "-----" );
-  }
-  // const htmlMeshPackage = window[ "babylon-htmlmesh" ];
-  const HtmlMesh = htmlMeshPackage.HtmlMesh;
-  const HtmlMeshRenderer = htmlMeshPackage.HtmlMeshRenderer;
-  // Create the HtmlMeshRenderer
-  new HtmlMeshRenderer(scene);
+  // CreateHtmlMesh,
+  CreateHtmlMeshInWebSite
+} from "./htmlMesh";
 
-  // // Shows how this can be used to include html content, such
-  // // as a form, in your scene.  This can be used to create
-  // // richer UIs than can be created with the standard Babylon
-  // // UI control, albeit with the restriction that such UIs would
-  // // not display in native mobile apps or XR applications.
-  // const htmlMeshDiv = new HtmlMesh(scene, "html-mesh-div");
-  // const div = document.createElement('div');
-  // div.innerHTML = `
-  //     <form style="padding: 10px; transform-origin: 0 0; scale: 4">
-  //         <label for="name">Name:</label>
-  //         <input type="text" id="name" name="name" required><br><br>
-          
-  //         <label for="country">Country:</label>
-  //         <select id="country" name="country">
-  //             <option value="USA">USA</option>
-  //             <option value="Canada">Canada</option>
-  //             <option value="UK">UK</option>
-  //             <option value="Australia">Australia</option>
-  //         </select><br><br>
-          
-  //         <label for="hobbies">Hobbies:</label><br>
-  //         <input type="checkbox" id="hobby1" name="hobbies" value="Reading">
-  //         <label for="hobby1">Reading</label><br>
-  //         <input type="checkbox" id="hobby2" name="hobbies" value="Gaming">
-  //         <label for="hobby2">Gaming</label><br>
-  //         <input type="checkbox" id="hobby3" name="hobbies" value="Sports">
-  //         <label for="hobby3">Sports</label><br><br>
-  //     </form>
-  // `;
-  // div.style.backgroundColor = 'white';
-  // div.style.width = '480px';
-  // div.style.height = '360px';
-  // // Style the form
-  
-  // htmlMeshDiv.setContent(div, 4, 3);
-  // htmlMeshDiv.position.x = -3;
-  // htmlMeshDiv.position.y = 2;
 
-  // // Shows how this can be used to include a PDF in your scene.  Note this is 
-  // // conceptual only.  Displaying a PDF like this works, but any links in the
-  // // PDF will navigate the current tab, which is probably not what you want.
-  // // There are other solutions out there such as PDF.js that may give you more
-  // // control, but ultimately proper display of PDFs is not within the scope of
-  // // this project.
-  // const pdfUrl = 'https://cdn.glitch.com/3da1885b-3463-4252-8ded-723332b5de34%2FNew_Horizons.pdf#zoom=75?v=1599831745689'
-  // const htmlMeshPdf = new HtmlMesh(scene, "html-mesh-pdf");
-  // const iframePdf = document.createElement('iframe');
-  // iframePdf.src = pdfUrl;
-  // iframePdf.width = '480px';
-  // iframePdf.height = '360px';
-  // htmlMeshPdf.setContent(iframePdf, 4, 3);
-  // htmlMeshPdf.position.x = 3;
-  // htmlMeshPdf.position.y = 2;
 
-  // // Shows how this can be used to include a website in your scene
-  const siteUrl = 'https://www.babylonjs.com/';
-  const htmlMeshSite = new HtmlMesh(scene, "html-mesh-site");
-  const iframeSite = document.createElement('iframe');
-  iframeSite.src = siteUrl;
-  iframeSite.width = '500px';
-  iframeSite.height = '500px';
-  htmlMeshSite.setContent(iframeSite, 4, 3);
-  htmlMeshSite.position.x = -3;
-  htmlMeshSite.position.y = -2;
-  htmlMeshSite.rotation.y = Math.PI / 4;
-  
-  // // Shows how this can be used to include a YouTube video in your scene
-  // const videoId = 'zELYw2qEUjI';
-  // const videoUrl = [ 'https://www.youtube.com/embed/', videoId, '?rel=0&enablejsapi=1&disablekb=1&controls=0&fs=0&modestbranding=1' ].join( '' );
-  // const htmlMeshVideo = new HtmlMesh(scene, "html-mesh-video");
-  // const iframeVideo = document.createElement('iframe');
-  // iframeVideo.src = videoUrl;
-  // iframeVideo.width = '480px';
-  // iframeVideo.height = '360px';
-  // htmlMeshVideo.setContent(iframeVideo, 4, 3);
-  // htmlMeshVideo.position.x = 3;
-  // htmlMeshVideo.position.y = -2;
-
-  // Shows how to create an HTML Overlay
-  // const overlayMesh = new HtmlMesh(scene, "html-overlay-mesh", { isCanvasOverlay: true });
-  // const overlayMeshDiv = document.createElement('div');
-  // overlayMeshDiv.innerHTML = 
-  // `<p style="padding: 60px; font-size: 80px;">
-  //   This is an overlay. It is positioned in front of the canvas. This allows it to have transparency and to be non-rectangular, 
-  //   but it will always show over any other content in the scene
-  // </p>
-  // <img class="img" src="https://vxvcojp.xsrv.jp/sandbox/p/p0168_3dgs/resources/IMG_1289.webp" alt="img" />`;
-  // overlayMeshDiv.style.backgroundColor = 'rgba(255,255,255,0.2)';
-  // overlayMeshDiv.style.width = '120px';
-  // overlayMeshDiv.style.height = '90px';
-  // overlayMeshDiv.style.display = 'flex';
-  // overlayMeshDiv.style.alignItems = 'center';
-  // overlayMeshDiv.style.justifyContent = 'center';
-  // overlayMeshDiv.style.borderRadius = '20px';
-  // overlayMeshDiv.style.fontSize = 'xx-small';
-  // overlayMeshDiv.style.padding = '10px';
-  // // Style the form
-  // overlayMesh.setContent(overlayMeshDiv, 4, 3);
-  // overlayMesh.position.z = 5;
-}
 
 
 
@@ -215,11 +101,8 @@ document.body.appendChild(htmlMeshScript);
 
 
 
+var htmlMeshDiv : any;
 
-// var advancedTextureForWindow: GUI.AdvancedDynamicTexture;
-// var windowImg: GUI.Image;
-
-// type PostiionType = "Box" | "Chair" | "Pod" | "Sphere" | "All" ;
 
 const main = async () => 
 {
@@ -232,11 +115,13 @@ const main = async () =>
   const engine = new Engine(renderCanvas);
   const scene = new Scene(engine);
   // とりあえず黒背景.
-  scene.clearColor = new Color4( 0, 0, 0, 1 );
+  // scene.clearColor = new Color4( 0, 0, 0, 1 );
+  scene.clearColor = new Color4(0,0,0,0);
   // 背景画像設定.
   // new Layer('bg', "https://i.imgur.com/mBBxGJH.jpg", scene, true ); //https://i.imgur.com/mBBxGJH.jpg
   // new Layer('bg', "assets/sky.jpg", scene, true ); // https://github.com/amaebi-dm/babylonjs_work/blob/main/docs/assets/sky.jpg
   new Layer('bg', "https://raw.githubusercontent.com/amaebi-dm/babylonjs_work/refs/heads/main/resources/sky.jpg", scene, true );
+  
 
 
 
@@ -252,38 +137,81 @@ const main = async () =>
 
 
 
-  // メッシュヒット.
-  scene.onPointerDown = function( evt, pickInfo )
-  {
-    let pickedMesh : string | undefined = "";
-    if( pickInfo.hit )
-    {
-      pickedMesh = pickInfo.pickedMesh?.name;
-    }
-
-    if( pickedMesh != null ) 
-    {      
-      // とりあえずヒットしたオブジェクトの名前で必要なモノを判断.
-      if( pickedMesh.includes( "_MESH" ) )
-      {
-        console.log( "mesh にヒット ( " + pickedMesh + " )" + evt );
-        // onMeshHit( pickedMesh, camera, scene );
-      }
-    }
-  }
-
-
-
 
   // box
-  // AddBox( "Box", new Vector3( 0.3, 0.3, 0.3 ), new Vector3( 1, 0.5, 0 ), new Color3( 1, 0, 0 ), scene );
+  AddBox( "Box", new Vector3( 0.3, 0.3, 0.3 ), new Vector3( 1, 0.5, 0 ), new Color3( 1, 0, 0 ), scene );  
+  AddMeshHit( "Box_MESH", () => { console.log( "Box !!!!!!" ); } );
   // sphere
-  // AddSphere( "Sphere", new Vector2( 0.3, 0.3 ), new Vector3( -1, 0.5, 0 ), new Color3( 0, 0, 1 ), scene, () => { console.log( "引数" ) } );  
+  AddSphere( "Sphere", new Vector2( 0.3, 0.3 ), new Vector3( -1, 0.5, 0 ), new Color3( 0, 0, 1 ), scene );
+  AddMeshHit( "Sphere_MESH", () => { console.log( "Sphere !!!!!!" ); } );
+  // Ground.
+  AddGround( 10, 10 );
 
 
   // ScreenUI/Button
   // advancedTextureForWindow = GUI.AdvancedDynamicTexture.CreateFullscreenUI("WindowCanvas");
-  // var advancedTextureButton = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+  var advancedTextureButton = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
+  var btn = GUI.Button.CreateSimpleButton("btn", "〇");
+  btn.top = "0px";
+  btn.left = "700px";
+  btn.width = "80px";
+  btn.height = "80px";
+  btn.color = "white";
+  btn.background = "green";
+  btn.onPointerClickObservable.add( () => 
+  {
+    console.log( "click" ); 
+    if( htmlMeshDiv != null )
+      {
+        
+        htmlMeshDiv.setContent( null );
+        // const div = document.getElementById('view');
+        // if( div != null ) div.innerHTML = "";
+        scene.removeMesh( htmlMeshDiv );
+        htmlMeshDiv = null;
+      }
+      else
+      {
+        console.log( "mesh div null" );
+        // createHtmlMeshInstances(scene);
+        // var html = `
+        // <form style="padding: 10px; transform-origin: 0 0; scale: 4">
+        //     <label for="name">Name:</label>
+        //     <input type="text" id="name" name="name" required><br><br>
+            
+        //     <label for="country">Country:</label>
+        //     <select id="country" name="country">
+        //         <option value="USA">USA</option>
+        //         <option value="Canada">Canada</option>
+        //         <option value="UK">UK</option>
+        //         <option value="Australia">Australia</option>
+        //     </select><br><br>
+            
+        //     <label for="hobbies">Hobbies:</label><br>
+        //     <input type="checkbox" id="hobby1" name="hobbies" value="Reading">
+        //     <label for="hobby1">Reading</label><br>
+        //     <input type="checkbox" id="hobby2" name="hobbies" value="Gaming">
+        //     <label for="hobby2">Gaming</label><br>
+        //     <input type="checkbox" id="hobby3" name="hobbies" value="Sports">
+        //     <label for="hobby3">Sports</label><br><br>
+        // </form>
+        // `;
+        // var html =
+        // `<p style="padding: 60px; font-size: 80px;">
+        //   This is an overlay. It is positioned in front of the canvas. This allows it to have transparency and to be non-rectangular, 
+        //   but it will always show over any other content in the scene
+        // </p>
+        // <img class="img" src="https://vxvcojp.xsrv.jp/sandbox/p/p0168_3dgs/resources/IMG_1289.webp" alt="img" />`;
+        // htmlMeshDiv = CreateHtmlMesh( scene, html );
+        
+        var url = 'https://www.babylonjs.com/';
+        htmlMeshDiv = CreateHtmlMeshInWebSite( scene, url );
+      }
+
+  });
+  advancedTextureButton.addControl( btn );
+
+
   // CreateMovingButtons( advancedTextureButton, camera );
   
   // Pod/SPZ.
@@ -298,7 +226,7 @@ const main = async () =>
   }
   
   // Chair/Ply
-  // var a = await LoadChairSampelPly( scene );
+  await LoadChairSampelPly( scene );
   
 
   var advancedTextureForLogo = GUI.AdvancedDynamicTexture.CreateFullscreenUI("LogoCanvas");
@@ -309,10 +237,10 @@ const main = async () =>
   // htmlMeshScript.onload = (event) => 
   // {
   //   console.log("babylon-htmlmesh loaded");
-  //   createHtmlMeshInstances(scene);
+  //   // createHtmlMeshInstances(scene);
   // }
 
-  createHtmlMeshInstances(scene);
+  // createHtmlMeshInstances(scene);
 
 
 
@@ -348,6 +276,10 @@ main();
 
 
 
+// var advancedTextureForWindow: GUI.AdvancedDynamicTexture;
+// var windowImg: GUI.Image;
+
+// type PostiionType = "Box" | "Chair" | "Pod" | "Sphere" | "All" ;
 // async function onMeshHit( hitMeshName : string, cam : ArcRotateCamera, scn : Scene )
 // {
 //   if( hitMeshName.includes( "Box" ) ) await onBoxHit( cam, scn );
@@ -465,7 +397,7 @@ main();
 
 
 
-  // var anim = scene.beginAnimation( targetCamera, 0, 50, false, 2 );
+//   var anim = scene.beginAnimation( targetCamera, 0, 50, false, 2 );
 
 
 //   // アニメーション待機.
@@ -516,13 +448,13 @@ main();
 // var isOpen = 0;
 // function oepnScreenWindow()
 // {
-//   advancedTextureForWindow.addControl( windowImg );
+//   // advancedTextureForWindow.addControl( windowImg );
 //   isOpen = 1;
     
 // }
 
 // function closeScreenWindow()
 // {
-//   advancedTextureForWindow.removeControl( windowImg );
+//   // advancedTextureForWindow.removeControl( windowImg );
 //   isOpen = 0;  
 // }
