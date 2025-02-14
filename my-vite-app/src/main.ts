@@ -152,8 +152,8 @@ const main = async () =>
   // advancedTextureForWindow = GUI.AdvancedDynamicTexture.CreateFullscreenUI("WindowCanvas");
   var advancedTextureButton = GUI.AdvancedDynamicTexture.CreateFullscreenUI("UI");
   var btn = GUI.Button.CreateSimpleButton("btn", "〇");
-  btn.top = "0px";
-  btn.left = "700px";
+  btn.top = "-400px";
+  btn.left = "0px";
   btn.width = "80px";
   btn.height = "80px";
   btn.color = "white";
