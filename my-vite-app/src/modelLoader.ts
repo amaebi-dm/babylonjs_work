@@ -35,6 +35,7 @@ const sampleChairUrl = "https://raw.githubusercontent.com/amaebi-dm/babylonjs_wo
 // const sampleChairUrl = "https://vxv.co.jp/bizb/wp-content/uploads/temporary/chair.ply";
 const samplePodUrl = "https://vxv.co.jp/bizb/wp-content/uploads/temporary/pod.spz";
 const sampleHouseUrl = "https://vxvcojp.xsrv.jp/sandbox/p/p0168_3dgs/light.spz";
+const sampleExUrl = "https://vxvcojp.xsrv.jp/sandbox/p/p0168_3dgs/exSample.spz";
 
 
 
@@ -51,6 +52,15 @@ export async function LoadPodSampleSpz( scene : Scene ) : Promise<AbstractMesh |
 {
   console.log( ">> SPZ Load Start." )
   var res = await LoadSpzModel( samplePodUrl, "pod", scene, "POD" );
+  console.log( ">> SPZ Load End." )
+
+  return res;
+}
+
+export async function LoadExSampleSpz( scene : Scene ) : Promise<AbstractMesh | null>
+{
+  console.log( ">> SPZ Load Start." )
+  var res = await LoadSpzModel( sampleExUrl, "exSample", scene, "EX" );
   console.log( ">> SPZ Load End." )
 
   return res;
