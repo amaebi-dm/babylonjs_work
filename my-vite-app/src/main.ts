@@ -68,7 +68,7 @@ import
   LoadChairSampelPly, 
   LoadPodSampleSpz,
   // LoadHouseSampleSpz 
-  // LoadExSampleSpz
+  LoadExSampleSpz
 } from "./modelLoader";
 import 
 { 
@@ -227,14 +227,14 @@ const main = async () =>
   }
 
   
-  // var ex = await LoadExSampleSpz( scene );
-  // if( ex != null )
-  // {
-  //   var current = ex.position;
-  //   current.x = 1;
-  //   current.y = 2;
-  //   ex.position = current;
-  // }
+  var ex = await LoadExSampleSpz( scene );
+  if( ex != null )
+  {
+    var current = ex.position;
+    current.x = 1;
+    current.y = 2;
+    ex.position = current;
+  }
   
   // Chair/Ply
   await LoadChairSampelPly( scene );
