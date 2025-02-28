@@ -19,11 +19,11 @@ import
   Vector2, 
   // MeshBuilder, 
   // StandardMaterial, 
-  // Animation, 
+  Animation, 
   // SceneLoader, 
   // UtilityLayerRenderer,
   // PositionGizmo,
-  // SineEase
+  SineEase
 } 
 from "@babylonjs/core";
 
@@ -141,10 +141,18 @@ const main = async () =>
 
   // box
   AddBox( "Box", new Vector3( 0.3, 0.3, 0.3 ), new Vector3( 1, 0.5, 0 ), new Color3( 1, 0, 0 ), scene );  
-  AddMeshHit( "Box_MESH", () => { console.log( "Box !!!!!!" ); } );
+  AddMeshHit( "Box_MESH", () => 
+  {
+    console.log( "Box !!!!!!" );
+    onMeshHit( "Box_Mesh", camera, scene );
+  } );
   // sphere
   AddSphere( "Sphere", new Vector2( 0.3, 0.3 ), new Vector3( -1, 0.5, 0 ), new Color3( 0, 0, 1 ), scene );
-  AddMeshHit( "Sphere_MESH", () => { console.log( "Sphere !!!!!!" ); } );
+  AddMeshHit( "Sphere_MESH", () => 
+  {
+    console.log( "Sphere !!!!!!" );
+    onMeshHit( "Sphere_Mesh", camera, scene ); 
+  } );
   // Ground.
   AddGround( 10, 10 );
 
@@ -212,6 +220,20 @@ const main = async () =>
   });
   advancedTextureButton.addControl( btn );
 
+  var btnAll = GUI.Button.CreateSimpleButton("btnAll", "C");
+  btnAll.top = "-250px";
+  btnAll.left = "0px";
+  btnAll.width = "80px";
+  btnAll.height = "80px";
+  btnAll.color = "white";
+  btnAll.background = "blue";
+  btnAll.onPointerClickObservable.add( async() => 
+  {
+    console.log( "click" ); 
+    await cameraAnimation( "All", camera, scene );
+  });
+  advancedTextureButton.addControl( btnAll );
+
 
   // CreateMovingButtons( advancedTextureButton, camera );
   
@@ -224,7 +246,14 @@ const main = async () =>
     current.x = 0;
     current.y = 1.5;
     podM.position = current;
+
+    // console.log( podM.name );
   }
+  AddMeshHit( "pod_Mesh", () => 
+  { 
+    console.log( "pod !!!!!!" ); 
+    onMeshHit( "Pod_Mesh", camera, scene );
+  } );
 
   
   // var ex = await LoadExSampleSpz( scene );
@@ -238,6 +267,12 @@ const main = async () =>
   
   // Chair/Ply
   await LoadChairSampelPly( scene );
+  // if( c != null ) console.log( c.name );
+  AddMeshHit( "Chair_Mesh", () => 
+  { 
+    console.log( "Chair !!!!!!" );
+    onMeshHit( "Chair_Mesh", camera, scene ); 
+  } );
   
 
   var advancedTextureForLogo = GUI.AdvancedDynamicTexture.CreateFullscreenUI("LogoCanvas");
@@ -290,169 +325,169 @@ main();
 // var advancedTextureForWindow: GUI.AdvancedDynamicTexture;
 // var windowImg: GUI.Image;
 
-// type PostiionType = "Box" | "Chair" | "Pod" | "Sphere" | "All" ;
-// async function onMeshHit( hitMeshName : string, cam : ArcRotateCamera, scn : Scene )
-// {
-//   if( hitMeshName.includes( "Box" ) ) await onBoxHit( cam, scn );
-//   else if( hitMeshName.includes( "Sphere" ) ) onSphereHit( cam, scn );
-//   else if( hitMeshName.includes( "Pod" ) ) console.log( "一旦無効" ); //onPodHit( cam, scn );
-//   else if( hitMeshName.includes( "Chair" ) ) onChairHit( cam, scn );
-// }
+type PostiionType = "Box" | "Chair" | "Pod" | "Sphere" | "All" ;
+async function onMeshHit( hitMeshName : string, cam : ArcRotateCamera, scn : Scene )
+{
+  if( hitMeshName.includes( "Box" ) ) await onBoxHit( cam, scn );
+  else if( hitMeshName.includes( "Sphere" ) ) onSphereHit( cam, scn );
+  else if( hitMeshName.includes( "Pod" ) ) onPodHit( cam, scn );
+  else if( hitMeshName.includes( "Chair" ) ) onChairHit( cam, scn );
+}
 
-// async function onBoxHit( cam : ArcRotateCamera, scn : Scene )
-// {
-//   OnAnyMeshHit();
-//   await cameraAnimation( "Box", cam, scn );
-// }
+async function onBoxHit( cam : ArcRotateCamera, scn : Scene )
+{
+  OnAnyMeshHit();
+  await cameraAnimation( "Box", cam, scn );
+}
 
-// async function onSphereHit( cam : ArcRotateCamera, scn : Scene )
-// {
-//   OnAnyMeshHit();
-//   await cameraAnimation( "Sphere", cam, scn );
-// }
+async function onSphereHit( cam : ArcRotateCamera, scn : Scene )
+{
+  OnAnyMeshHit();
+  await cameraAnimation( "Sphere", cam, scn );
+}
 
-// async function onPodHit( cam : ArcRotateCamera, scn : Scene )
-// {
-//   OnAnyMeshHit();
-//   await cameraAnimation( "Pod", cam, scn );
-// }
+async function onPodHit( cam : ArcRotateCamera, scn : Scene )
+{
+  OnAnyMeshHit();
+  await cameraAnimation( "Pod", cam, scn );
+}
 
-// async function onChairHit( cam : ArcRotateCamera, scn : Scene )
-// {
-//   OnAnyMeshHit();
-//   await cameraAnimation( "Chair", cam, scn );
-// }
+async function onChairHit( cam : ArcRotateCamera, scn : Scene )
+{
+  OnAnyMeshHit();
+  await cameraAnimation( "Chair", cam, scn );
+}
 
-// function OnAnyMeshHit()
-// {
+function OnAnyMeshHit()
+{
 
-// }
-
-
+}
 
 
 
-// var currentPosition : PostiionType = "All";
-// var isAnimation = false;
 
-// async function cameraAnimation( goalPosition: PostiionType, targetCamera: ArcRotateCamera, scene: Scene ) 
-// {  
-//   if( isAnimation == true )
-//   {
-//     console.log( "現在アニメーション中です." );
-//     return;
-//   }
 
-//   if( currentPosition == goalPosition )
-//   {
-//     console.log( "同じ場所なのでアニメーションを中断します. isOpen : " + isOpen );
+var currentPosition : PostiionType = "All";
+var isAnimation = false;
+
+async function cameraAnimation( goalPosition: PostiionType, targetCamera: ArcRotateCamera, scene: Scene ) 
+{  
+  if( isAnimation == true )
+  {
+    console.log( "現在アニメーション中です." );
+    return;
+  }
+
+  if( currentPosition == goalPosition )
+  {
+    console.log( "同じ場所なのでアニメーションを中断します." );
     
-//     // if( isOpen == 1 ) closeScreenWindow();
-//     // else oepnScreenWindow();
+    // if( isOpen == 1 ) closeScreenWindow();
+    // else oepnScreenWindow();
     
-//     return;
-//   }
-//   else
-//   {
-//     // if( isOpen = 1 ) closeScreenWindow();
-//     // 閉じてる時はアニメーションがあるので開かない.
-//   }
+    return;
+  }
+  else
+  {
+    // if( isOpen = 1 ) closeScreenWindow();
+    // 閉じてる時はアニメーションがあるので開かない.
+  }
 
-//   isAnimation = true;
+  isAnimation = true;
 
-//   // var start = getPostiionValue( currentPosition );
-//   var goal = getPostiionValue( goalPosition );
-//   // console.log( goal );
+  // var start = getPostiionValue( currentPosition );
+  var goal = getPostiionValue( goalPosition );
+  // console.log( goal );
 
-//   // targetCamera.position = start;
-//   // position.
-//   var animation1 = new Animation( "animation", "position", 30, Animation.ANIMATIONTYPE_VECTOR3 );
-//   var keys = [];
-//   keys.push(
-//     { 
-//       frame: 0, 
-//       value: targetCamera.position
-//     });
-//   keys.push(
-//     { 
-//       frame: 50, 
-//       value: goal
-//     });
-//   animation1.setKeys( keys );
-//   var ease = new SineEase();
-//   animation1.setEasingFunction( ease );
-//   // var ease = new BezierCurveEase(0.32, -0.73, 0.69, 1.59);
-//   // animation.setEasingFunction( ease );
-//   targetCamera.animations = [];
-//   targetCamera.animations.push( animation1 );
+  // targetCamera.position = start;
+  // position.
+  var animation1 = new Animation( "animation", "position", 30, Animation.ANIMATIONTYPE_VECTOR3 );
+  var keys = [];
+  keys.push(
+    { 
+      frame: 0, 
+      value: targetCamera.position
+    });
+  keys.push(
+    { 
+      frame: 50, 
+      value: goal
+    });
+  animation1.setKeys( keys );
+  var ease = new SineEase();
+  animation1.setEasingFunction( ease );
+  // var ease = new BezierCurveEase(0.32, -0.73, 0.69, 1.59);
+  // animation.setEasingFunction( ease );
+  targetCamera.animations = [];
+  targetCamera.animations.push( animation1 );
 
-//   // target
-//   // var startT = getCameraTargetValue( currentPosition );
-//   var goalT = getCameraTargetValue( goalPosition );
-//   var animation2 = new Animation( "animation", "target", 30, Animation.ANIMATIONTYPE_VECTOR3 );
-//   var keys = [];
-//   keys.push(
-//     { 
-//       frame: 0, 
-//       value: targetCamera.target
-//     });
-//   keys.push(
-//     { 
-//       frame: 50, 
-//       value: goalT
-//     });
-//   animation2.setKeys( keys );
-//   animation2.setEasingFunction( ease );
-//   // targetCamera.animations = [];
-//   targetCamera.animations.push( animation2 );
-
-
-
-//   var anim = scene.beginAnimation( targetCamera, 0, 50, false, 2 );
+  // target
+  // var startT = getCameraTargetValue( currentPosition );
+  var goalT = getCameraTargetValue( goalPosition );
+  var animation2 = new Animation( "animation", "target", 30, Animation.ANIMATIONTYPE_VECTOR3 );
+  var keys = [];
+  keys.push(
+    { 
+      frame: 0, 
+      value: targetCamera.target
+    });
+  keys.push(
+    { 
+      frame: 50, 
+      value: goalT
+    });
+  animation2.setKeys( keys );
+  animation2.setEasingFunction( ease );
+  // targetCamera.animations = [];
+  targetCamera.animations.push( animation2 );
 
 
-//   // アニメーション待機.
-//   await anim.waitAsync();
-//   // targetCamera.position = goal;
-//   anim.stop();
 
-//   currentPosition = goalPosition;
-//   targetCamera.target = getCameraTargetValue( goalPosition );
+  var anim = scene.beginAnimation( targetCamera, 0, 50, false, 2 );
 
-//   isAnimation = false;
+
+  // アニメーション待機.
+  await anim.waitAsync();
+  // targetCamera.position = goal;
+  anim.stop();
+
+  currentPosition = goalPosition;
+  targetCamera.target = getCameraTargetValue( goalPosition );
+
+  isAnimation = false;
 
   
-//   // if( isOpen == 0 )
-//   // {
-//   //   oepnScreenWindow();
-//   // }
+  // if( isOpen == 0 )
+  // {
+  //   oepnScreenWindow();
+  // }
 
-// }
+}
 
 
-// function getPostiionValue( key : PostiionType )
-// {
-//   switch ( key )
-//   {
-//     case "All": return new Vector3( 0, 1, -3 );
-//     case "Box": return new Vector3( 1, 1, -2 );
-//     case "Sphere": return new Vector3( -1, 1, -2 );
-//     case "Chair": return new Vector3( 0, 1, -2 );
-//     case "Pod": return new Vector3( 0, 2, -1 );
-//   }
-// }
+function getPostiionValue( key : PostiionType )
+{
+  switch ( key )
+  {
+    case "All": return new Vector3( 0, 1, -3 );
+    case "Box": return new Vector3( 1, 1, -2 );
+    case "Sphere": return new Vector3( -1, 1, -2 );
+    case "Chair": return new Vector3( 0, 1, -2 );
+    case "Pod": return new Vector3( 0, 2, -1 );
+  }
+}
 
-// function getCameraTargetValue( key : PostiionType )
-// {
-//   switch ( key )
-//   {
-//     case "All": return new Vector3( 0, 1, 0 );
-//     case "Box": return new Vector3( 1, 0.5, 0 );
-//     case "Sphere": return new Vector3( -1, 0.5, 0 );
-//     case "Chair": return new Vector3( 0, 1, 0 );
-//     case "Pod": return new Vector3( 0, 1.5, 0 );
-//   }
-// }
+function getCameraTargetValue( key : PostiionType )
+{
+  switch ( key )
+  {
+    case "All": return new Vector3( 0, 1, 0 );
+    case "Box": return new Vector3( 1, 0.5, 0 );
+    case "Sphere": return new Vector3( -1, 0.5, 0 );
+    case "Chair": return new Vector3( 0, 1, 0 );
+    case "Pod": return new Vector3( 0, 1.5, 0 );
+  }
+}
 
 
 

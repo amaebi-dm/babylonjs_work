@@ -42,7 +42,7 @@ const sampleExUrl = "https://vxvcojp.xsrv.jp/sandbox/p/p0168_3dgs/exSample.spz";
 export async function LoadChairSampelPly( scene : Scene ) : Promise<AbstractMesh | null>
 {
   console.log( ">> PLY Load Start." )
-  var res = await LoadPlyModel( sampleChairUrl, "chair", scene, "CHAIR" );
+  var res = await LoadPlyModel( sampleChairUrl, "Chair", scene, "CHAIR" );
   console.log( ">> PLY Load End." )
 
   return res;
@@ -51,7 +51,7 @@ export async function LoadChairSampelPly( scene : Scene ) : Promise<AbstractMesh
 export async function LoadPodSampleSpz( scene : Scene ) : Promise<AbstractMesh | null>
 {
   console.log( ">> SPZ Load Start." )
-  var res = await LoadSpzModel( samplePodUrl, "pod", scene, "POD" );
+  var res = await LoadSpzModel( samplePodUrl, "Pod", scene, "POD" );
   console.log( ">> SPZ Load End." )
 
   return res;
