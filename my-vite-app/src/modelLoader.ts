@@ -35,7 +35,9 @@ const sampleChairUrl = "https://raw.githubusercontent.com/amaebi-dm/babylonjs_wo
 // const sampleChairUrl = "https://vxv.co.jp/bizb/wp-content/uploads/temporary/chair.ply";
 const samplePodUrl = "https://vxv.co.jp/bizb/wp-content/uploads/temporary/pod.spz";
 const sampleHouseUrl = "https://vxvcojp.xsrv.jp/sandbox/p/p0168_3dgs/light.spz";
-const sampleExUrl = "https://vxvcojp.xsrv.jp/sandbox/p/p0168_3dgs/exSample.spz";
+// const sampleExUrl = "https://vxvcojp.xsrv.jp/sandbox/p/p0168_3dgs/exSample.spz";
+const sampleExUrl = "https://vxvcojp.xsrv.jp/sandbox/p/p0168_3dgs//upload_dev/upload/uketsukejou.spz";
+// const sampleExUrl = "https://vxvcojp.xsrv.jp/sandbox/p/p0168_3dgs//upload_dev/upload/azabudai.spz";
 
 
 

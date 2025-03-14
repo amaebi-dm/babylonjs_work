@@ -68,7 +68,7 @@ import
   LoadChairSampelPly, 
   LoadPodSampleSpz,
   // LoadHouseSampleSpz 
-  // LoadExSampleSpz
+  LoadExSampleSpz
 } from "./modelLoader";
 import 
 { 
@@ -261,9 +261,25 @@ const main = async () =>
   // {
   //   var current = ex.position;
   //   current.x = 1;
-  //   current.y = 2;
+  //   current.y = 1.5;
   //   ex.position = current;
+  //   var currentRot = ex.rotation;
+  //   currentRot.x = 0;
+  //   ex.rotation = currentRot;
   // }
+
+  // 受付嬢、麻布台設定.
+  var ex = await LoadExSampleSpz( scene );
+  if( ex != null )
+  {
+    var current = ex.position;
+    current.x = 0.6;
+    current.y = 1;
+    ex.position = current;
+    var currentRot = ex.rotation;
+    currentRot.x = 3.1;
+    ex.rotation = currentRot;
+  }
   
   // Chair/Ply
   await LoadChairSampelPly( scene );
